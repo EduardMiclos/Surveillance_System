@@ -13,7 +13,7 @@ class InputAdapter:
     across the frames.
 
     Args:
-        data_path (str): Path to the chunk of frames.
+        data (object): The chunk of frames.
         input_mode (str): The type of the input data (frames, differences or both).
         normalize (bool): Boolean variable. Perform normalization (divide by 255.0) or not.
         crop_size (int): Desired size after cropping.
@@ -21,22 +21,22 @@ class InputAdapter:
         frame_size (int): The size (width = height) of the image.
         background_suppress (bool): Boolean variable. Perform background suppress or not.
     Methods:
-        __init__(input_mode: InputMode = InputMode.BOTH, data_path: str): 
+        __init__(frame_size: int, normalize: bool, 
+                 crop_size: int, chunk_length: int, background_suppress: bool, 
+                 input_mode: InputMode): 
                           Instantiates the class variables.
-        crop_center(): Crops the given image to the center.
-        normalize(): Performs normalization. Divides the data by 255.0,
+        crop_center(data: np.array, x_crop: int, y_crop: int): Crops the given image to the center.
+        normalize(data: np.array): Performs normalization. Divides the data by 255.0,
                           subtracts the mean and divides by the standard deviation.
-        frame_difference(): Performs frame difference using the
+        frame_difference(data: np.array): Performs frame difference using the
                           formula: frame[i + 1] - frame[i]
-        background_suppression(): Performs background suppression by
+        background_suppression(data: np.array): Performs background suppression by
                           subtracting the average pixel value from all the pixels.
-        load_data(): Loads the data from the data_path and performs all the
-                          necessary transformations to it.
+        transform_data(data: object): Performs all the necessary transformations to the data.
                           
     """
 
-    def __init__(data_path: str, frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
-        self.data_path = data_path
+    def __init__(frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
         self.frame_size = frame_sizes
         self.normalize = normalize
         self.crop_size = crop_size
@@ -44,7 +44,7 @@ class InputAdapter:
         self.background_suppress = background
         self.input_mode = input_mode
 
-    def crop_center(data: np.array, x_crop: int, y_crop: int):
+    def crop_center(self, data: np.array, x_crop: int, y_crop: int):
         """
         This method crops the input frames to the center.
         """
@@ -58,32 +58,26 @@ class InputAdapter:
         data = data[:, y_start:y_end, x_start:x_end, :]
         return data
 
-    def normalize(self, data):
+    def normalize(self, data: np.array):
         data = (data / 255.0).astype(np.float32)
         mean = np.mean(data)
         std = np.std(data)
         return (data - mean) / std
 
-    def frame_difference(self, data):
+    def frame_difference(self, data: np.array):
         out = []
         for i in range(self.chunk_length - 1):
             out.append(data[i + k] - data[i])
 
         return np.array(out, dtype = np.float32)
 
-    def background_suppression(self, data):
+    def background_suppression(self, data: np.array):
         video = np.array(data, dtype = np.float32)
         avg_back = np.mean(video, axis = 0)
         video = np.abs(video - avg_back)
         return video
 
-    def load_data(self):
-
-        """
-        Loading the .npy files.
-        """
-        npy_file = np.load(self.path, mmap_mode='r', allow_pickle=True)
-        data = np.copy(npy_file)
+    def transform_data(self, data: object):
 
         """
         Converting the data to float32.
@@ -108,8 +102,8 @@ class InputAdapter:
         Cropping the image
         """
         data = self.crop_center(data, 
-                                x_crop = (self.frame_size - 224)//2, 
-                                y_crop = (self.frame_size - 224)//2)
+                                x_crop = (self.frame_size - self.crop_size)//2, 
+                                y_crop = (self.frame_size - self.crop_size)//2)
 
         """
         Performing frame difference, if it's the case.
@@ -141,8 +135,8 @@ class InputAdapter:
         Deciding what to return.
         """
         if self.mode == InputMode.BOTH:
-            return frames_data, differences_data
+            return np.expand_dims(frames_data, axis = 0), np.expand_dims(differences_data, axis = 0)
         elif self.mode == InputMode.ONLY_FRAMES:
-            return frames_data
+            return np.expand_dims(frames_data, axis = 0)
         elif self.mode == InputMode.ONLY_DIFFERENCES:
-            return differences_data
+            return np.expand_dims(differences_data, axis = 0)
