@@ -1,11 +1,10 @@
 from flask import Flask
+from controller.Application import Application
+from resources.FrameReceiver import FrameReceiver
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return "O iubesc pe Ema"
-
+application = Application()
+app = application.create_app(resources = [FrameReceiver])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run()
+

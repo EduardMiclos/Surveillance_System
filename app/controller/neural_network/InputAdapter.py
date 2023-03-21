@@ -1,5 +1,9 @@
 import numpy as np
-import InputMode
+
+if __name__ == "controller.neural_network.InputAdapter":
+    from controller.neural_network import InputMode
+else:
+    import InputMode
 
 class InputAdapter:
 
@@ -7,15 +11,15 @@ class InputAdapter:
 
     Input Adapter
 
-    This class adapts a general .npy input file to the expected
+    This class adapts an array object to the expected
     input of the Neural Network model by applying certain
-    transformation (frame difference, background suppression) 
+    transformations (frame difference, background suppression) 
     across the frames.
 
     Args:
         data (object): The chunk of frames.
-        input_mode (str): The type of the input data (frames, differences or both).
-        normalize (bool): Boolean variable. Perform normalization (divide by 255.0) or not.
+        input_mode (InputMode): The type of the input data (frames, differences or both).
+        normalize (bool): Boolean variable. Perform normalization or not.
         crop_size (int): Desired size after cropping.
         chunk_length (int): The length of the frames chunk.
         frame_size (int): The size (width = height) of the image.
@@ -29,7 +33,7 @@ class InputAdapter:
         normalize(data: np.array): Performs normalization. Divides the data by 255.0,
                           subtracts the mean and divides by the standard deviation.
         frame_difference(data: np.array): Performs frame difference using the
-                          formula: frame[i + 1] - frame[i]
+                          formula: frame[i + 1] - frame[i].
         background_suppression(data: np.array): Performs background suppression by
                           subtracting the average pixel value from all the pixels.
         transform_data(data: object): Performs all the necessary transformations to the data.
@@ -133,6 +137,8 @@ class InputAdapter:
 
         """
         Deciding what to return.
+        We're also expanding the dims according to the model input shape: 
+        (chunk_length, crop_size, crop_size, 3) -> (1, chunk_length, crop_size, crop_size, 3)
         """
         if self.mode == InputMode.BOTH:
             return np.expand_dims(frames_data, axis = 0), np.expand_dims(differences_data, axis = 0)

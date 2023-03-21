@@ -1,6 +1,10 @@
 from flask import Flask
 from flask_restful import Api, Resource
-import WSGI
+
+if __name__ == "controller.Application":
+    from controller.WSGI import WSGI
+else:
+    from WSGI import WSGI
 
 class Application:
     """
@@ -16,10 +20,27 @@ class Application:
         run(debug: bool): Starts the Flask application.
 
     """
-    def __init__(port: str = "8080"):
+    def __init__(self, port: str = "8080"):
         self.port = port
     
-    def run(self, resources: object, debug: bool = False):
+    def create_app(self, resources: object):
+        """
+        Creating the Flask application + restful API.
+        """
+        self.app = Flask(__name__)
+        self.api = Api(self.app)
+        self.api.init_app(self.app)
+
+        """
+        Iterating through all the resources (classes)
+        and adding them to the REST API object.
+        """
+        for resource in resources:
+            self.api.add_resource(resource, resource.route)
+
+        return self.app
+
+    def run(self, debug: bool = False):
         """
         Creating and running the web server gateway interface.
         """
@@ -27,22 +48,10 @@ class Application:
         self.wsgi.run()
 
         """
-        Creating the Flask application + restful API.
-        """
-        self.app = Flask(__name__)
-        self.api = Api(app)
-
-        """
-        Iterating through all the resources (classes)
-        and adding them to the REST API object.
-        """
-        for resource in resources:
-            self.api.add_resource(resource, resource.getUrl())
-
-        """
         Running the app
         """
-        self.app.run(debug)
+
+        self.app.run(debug = debug)
 
             
 
