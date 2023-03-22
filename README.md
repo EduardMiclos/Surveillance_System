@@ -35,3 +35,6 @@ The <b>Surveillance System</b> represents a set of interconnected embedded syste
 - A server is an entity which receives data from one or multiple clients. It will act as a <b>Web server</b> that the employees will be able to access by making use of their log-in credentials.
 
 The <b>web interface</b> is provided to the end-user by the webserver. Violent actions will be detected and notified on the screen by coloring the margins of the camera-frame. The event will be saved inside the database, along with a short and representative sequence of frames, information about the time, the date and more.
+
+### Use-case diagram
+![image](https://user-images.githubusercontent.com/59684906/227010077-ea6d6c4d-cac6-46ce-a122-43c33fcc7553.png)
