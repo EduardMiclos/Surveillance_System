@@ -23,11 +23,20 @@ class Application:
     def __init__(self, port: str = "8080"):
         self.port = port
     
-    def create_app(self, resources: object):
+    def create_app(self, resources: object, config_file: object = 'config.py'):
         """
-        Creating the Flask application + restful API.
+        Creating the Flask application.
         """
-        self.app = Flask(__name__)
+        self.app = Flask(__name__, instance_relative_config = True)
+        
+        """
+        Setting up the configuration for the Flask application.
+        """
+        self.app.config.from_pyfile(config_file)
+        
+        """
+        Creating the Flask RESTful API.
+        """
         self.api = Api(self.app)
         self.api.init_app(self.app)
 
