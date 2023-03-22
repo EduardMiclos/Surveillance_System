@@ -1,12 +1,12 @@
 import numpy as np
 import cv2 as cv
 
-if __name__ == "controller.neural_network.NNAdapter":
-    from controller.neural_network.NNAdapter import InputAdapter
-    from controller.neural_network.NNAdapter import InputMode
-else:
+if __name__ == "__main__":
     import InputAdapter
     import InputMode
+else:
+    from .InputAdapter import InputAdapter
+    from .InputAdapter import InputMode
 
 class NNAdapter:
 

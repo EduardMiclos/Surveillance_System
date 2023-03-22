@@ -1,10 +1,11 @@
 from flask import Flask
-from controller.Application import Application
-from resources.FrameReceiver import FrameReceiver
+
+from controllers.Application import Application
+from blueprints.api import api_bp
 
 application = Application()
-app = application.create_app(resources = [FrameReceiver])
+app = application.create_app(blueprints = [api_bp])
 
 if __name__ == "__main__":
+    print(app.blueprints)
     application.run()
-

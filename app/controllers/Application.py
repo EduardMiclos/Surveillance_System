@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_restful import Api, Resource
 
-if __name__ == "controller.Application":
-    from controller.WSGI import WSGI
-else:
+if __name__ == "__main__":
     from WSGI import WSGI
+else:
+    from .WSGI import WSGI
+
 
 class Application:
     """
@@ -23,7 +24,7 @@ class Application:
     def __init__(self, port: str = "8080"):
         self.port = port
     
-    def create_app(self, resources: object, config_file: object = 'config.py'):
+    def create_app(self, blueprints: object, config_file: object = 'config.py'):
         """
         Creating the Flask application.
         """
@@ -33,19 +34,12 @@ class Application:
         Setting up the configuration for the Flask application.
         """
         self.app.config.from_pyfile(config_file)
-        
-        """
-        Creating the Flask RESTful API.
-        """
-        self.api = Api(self.app)
-        self.api.init_app(self.app)
 
         """
-        Iterating through all the resources (classes)
-        and adding them to the REST API object.
+        Adding all the blueprints to the application.
         """
-        for resource in resources:
-            self.api.add_resource(resource, resource.route)
+        for blueprint in blueprints:
+            self.app.register_blueprint(blueprint)
 
         return self.app
 

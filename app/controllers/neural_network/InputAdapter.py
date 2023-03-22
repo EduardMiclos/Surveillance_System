@@ -1,9 +1,9 @@
 import numpy as np
 
-if __name__ == "controller.neural_network.InputAdapter":
-    from controller.neural_network import InputMode
+if __name__ == "__main__":
+    from .InputMode import InputMode
 else:
-    import InputMode
+    from InputMode import InputMode
 
 class InputAdapter:
 
