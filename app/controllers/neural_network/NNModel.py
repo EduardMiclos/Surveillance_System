@@ -27,7 +27,7 @@ class NNModel(object):
             cls.instance = super(NNModel, cls).__new__(cls)
         return cls.instance
 
-    def __init__(input_mode: InputMode):
+    def __init__(self, input_mode: InputMode):
         self.input_mode = input_mode
         self.generate_model()
 

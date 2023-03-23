@@ -6,8 +6,17 @@ if __name__ == "__main__":
 else:
     from .routes.FrameReceiver import FrameReceiver
 
+"""
+Creating the Blueprint for the API.
+"""
 api_bp = Blueprint('api', __name__, url_prefix='/api')
+
+"""
+Creating the API for this specific blueprint.
+"""
 api = Api(api_bp)
 
-
-api.add_resource(FrameReceiver, '/sendframes')
+"""
+Adding all the necessary resources to the blueprint's api.
+"""
+api.add_resource(FrameReceiver, '/send/frames')
