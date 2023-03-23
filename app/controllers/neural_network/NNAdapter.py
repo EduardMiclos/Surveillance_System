@@ -2,11 +2,14 @@ import numpy as np
 import cv2 as cv
 
 if __name__ == "__main__":
-    import InputAdapter
-    import InputMode
+    from InputAdapter import InputAdapter
+    from InputMode import InputMode
+    from NNModel import NNModel
 else:
     from .InputAdapter import InputAdapter
     from .InputAdapter import InputMode
+    from .NNModel import NNModel
+    
 
 class NNAdapter:
 
@@ -34,14 +37,14 @@ class NNAdapter:
 
     input_mode = InputMode.BOTH
 
-    def __init__(resized: int = 360):
+    def __init__(self, resized: int = 360):
         self.input_adapter = InputAdapter(frame_size = resized)
         self.neural_model = NNModel(InputAdapter.input_mode)
 
     def resize(self, data: object):
         return cv.resize(data, (self.resized, self.resized))
 
-    def predict_violence(data: object):
+    def predict_violence(self, data: object):
         data = self.resize(data)
         data = self.input_adapter.transform_data(data)
 
