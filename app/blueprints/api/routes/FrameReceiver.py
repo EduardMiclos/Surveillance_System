@@ -10,4 +10,9 @@ class FrameReceiver(Resource):
         form_data = request.get_json();
         
         errors = frame_receiver_schema.validate(form_data)
-        return "123"
+        
+        # Continue later
+        if errors:
+            return 0
+        
+        
