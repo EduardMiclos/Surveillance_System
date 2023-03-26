@@ -52,7 +52,7 @@ class NNModel(object):
         self.weight_decay = weight_decay
         self.frame_diff_interval = frame_diff_interval     
         self.dense_dropout = dense_dropout   
-        self.generate_model()
+        self.model = self.generate_model()
 
     def generate_model(self):
         
@@ -151,7 +151,8 @@ class NNModel(object):
         elif self.input_mode == InputMode.ONLY_DIFFERENCES:
             model = Model(inputs = frames_diff_input, outputs = predictions)
 
+        model.load_weights("./controllers/neural_network/trained_model/rwf2000_model")
         return model
 
     def predict(self, data: object):
-        return 0.1
+        return self.model.predict([data])
