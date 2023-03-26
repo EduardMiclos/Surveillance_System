@@ -34,6 +34,7 @@ class WSGI:
             If there's any process running on port 8080, kill it.
             """
             subprocess.run(['fuser',
+                            '-k',
                             '8080/tcp'])
             
             subprocess.run(['gunicorn', 

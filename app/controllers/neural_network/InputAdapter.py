@@ -40,12 +40,12 @@ class InputAdapter:
                           
     """
 
-    def __init__(frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
+    def __init__(self, frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
         self.frame_size = frame_size
         self.normalize = normalize
         self.crop_size = crop_size
         self.chunk_length = chunk_length
-        self.background_suppress = background
+        self.background_suppress = background_suppress
         self.input_mode = input_mode
 
     def crop_center(self, data: np.array, x_crop: int, y_crop: int):
@@ -62,7 +62,7 @@ class InputAdapter:
         data = data[:, y_start:y_end, x_start:x_end, :]
         return data
 
-    def normalize(self, data: np.array):
+    def normalize_data(self, data: np.array):
         data = (data / 255.0).astype(np.float32)
         mean = np.mean(data)
         std = np.std(data)
@@ -71,7 +71,7 @@ class InputAdapter:
     def frame_difference(self, data: np.array):
         out = []
         for i in range(self.chunk_length - 1):
-            out.append(data[i + k] - data[i])
+            out.append(data[i + 1] - data[i])
 
         return np.array(out, dtype = np.float32)
 
@@ -128,21 +128,21 @@ class InputAdapter:
         if frames:
             frames_data = np.array(frames_data, dtype = np.float32)
             if self.normalize:     
-                frames_data = self.normalize(frames_data)
+                frames_data = self.normalize_data(frames_data)
 
         if differences:
             differences_data = np.array(differences_data, dtype = np.float32)
             if self.normalize:
-                diff_data = self.normalize(differences_data)
+                differences_data = self.normalize_data(differences_data)
 
         """
         Deciding what to return.
         We're also expanding the dims according to the model input shape: 
         (chunk_length, crop_size, crop_size, 3) -> (1, chunk_length, crop_size, crop_size, 3)
         """
-        if self.mode == InputMode.BOTH:
+        if self.input_mode == InputMode.BOTH:
             return np.expand_dims(frames_data, axis = 0), np.expand_dims(differences_data, axis = 0)
-        elif self.mode == InputMode.ONLY_FRAMES:
+        elif self.input_mode == InputMode.ONLY_FRAMES:
             return np.expand_dims(frames_data, axis = 0)
-        elif self.mode == InputMode.ONLY_DIFFERENCES:
+        elif self.input_mode == InputMode.ONLY_DIFFERENCES:
             return np.expand_dims(differences_data, axis = 0)
