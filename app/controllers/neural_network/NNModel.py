@@ -34,16 +34,11 @@ class NNModel(object):
     Methods:
         __init__(reized: int): Instantiates the class variables.
     """
-    """
-    Singleton logic for the NNModel class.
-    """
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(NNModel, cls).__new__(cls)
-        return cls.instance
+    
+    _instance = None
 
     def __init__(self, input_mode: InputMode, chunk_size: int = 32, frame_size: int = 224, cnn_trainable: bool = True, cnn_dropout: float = 0.25, seed: int = 42, lstm_type: str = 'sepconv', lstm_dropout: float = 0.25, weight_decay: float = 2e-5, frame_diff_interval: int = 1, dense_dropout: float = 0.3):
-        if hasattr(self, 'input_mode'):
+        if NNModel._instance is not None:
             raise RuntimeError('NNModel has already been initialized.')
         
         self.input_mode = input_mode
@@ -55,7 +50,8 @@ class NNModel(object):
         self.lstm_type = lstm_type
         self.lstm_dropout = lstm_dropout
         self.weight_decay = weight_decay
-        self.frame_diff_interval = frame_diff_interval        
+        self.frame_diff_interval = frame_diff_interval     
+        self.dense_dropout = dense_dropout   
         self.generate_model()
 
     def generate_model(self):

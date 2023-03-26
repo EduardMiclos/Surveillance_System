@@ -1,9 +1,9 @@
 import numpy as np
 
 if __name__ == "__main__":
-    from .InputMode import InputMode
-else:
     from InputMode import InputMode
+else:
+    from .InputMode import InputMode
 
 class InputAdapter:
 
@@ -41,7 +41,7 @@ class InputAdapter:
     """
 
     def __init__(frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
-        self.frame_size = frame_sizes
+        self.frame_size = frame_size
         self.normalize = normalize
         self.crop_size = crop_size
         self.chunk_length = chunk_length

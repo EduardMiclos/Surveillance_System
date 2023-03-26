@@ -7,11 +7,12 @@ if __name__ == "__main__":
     from NNModel import NNModel
 else:
     from .InputAdapter import InputAdapter
-    from .InputAdapter import InputMode
+    from .InputMode import InputMode
     from .NNModel import NNModel
     
 
 class NNAdapter:
+    pass
 
     """
 
@@ -38,15 +39,15 @@ class NNAdapter:
     input_mode = InputMode.BOTH
 
     def __init__(self, resized: int = 360):
-        self.input_adapter = InputAdapter(frame_size = resized)
-        self.neural_model = NNModel(InputAdapter.input_mode)
+        # self.input_adapter = InputAdapter(frame_size = resized)
+        self.neural_model = NNModel(NNAdapter.input_mode)
 
     def resize(self, data: object):
         return cv.resize(data, (self.resized, self.resized))
 
     def predict_violence(self, data: object):
-        data = self.resize(data)
-        data = self.input_adapter.transform_data(data)
+        # data = self.resize(data)
+        # data = self.input_adapter.transform_data(data)
 
         p = self.neural_model.predict(data)
         return 1 - p
