@@ -6,5 +6,5 @@ class FrameReceiverSchema(Schema):
     channels = fields.Integer(required = True, validate = validate.Equal(3))
     frame_width = fields.Integer(required = True, validate = validate.Range(min = 100, max = 800))
     frame_height = fields.Integer(required = True, validate = validate.Range(min = 100, max = 800))
-        
+    
 frame_receiver_schema = FrameReceiverSchema()
