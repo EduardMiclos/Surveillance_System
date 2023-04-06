@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class InputMode(Enum):
     """
 
@@ -8,11 +7,6 @@ class InputMode(Enum):
 
     Enum class defining all the 3 types of input modes
     used by the Neural Network.
-
-    Args:
-        Mone
-    Methods:
-        None
 
     """
 

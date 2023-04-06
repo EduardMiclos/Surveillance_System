@@ -13,26 +13,29 @@ from tensorflow.keras.backend import expand_dims
 from tensorflow.keras.regularizers import l2
 from tensorflow.python.keras import backend as K
 
-if __name__ == "__main__":
-    from sep_conv_rnn import SepConvLSTM2D, AttenSepConvLSTM2D
-    from InputMode import InputMode
-else:
-    from .sep_conv_rnn import SepConvLSTM2D, AttenSepConvLSTM2D
-    from .InputMode import InputMode
+
+from .sep_conv_rnn import SepConvLSTM2D, AttenSepConvLSTM2D
+from .InputMode import InputMode
 
 
 
 class NNModel(object):
+    
     """
+    
     Neural Network Model
     This class is a Singleton wrapper for the trained
     Neural Network model.
+    
     Static variables:
-        input_mode: InputMode
+        _instance: NNModel
     Args:
         input_mode (InputMode): The type of the input data (frames, differences or both).
     Methods:
         __init__(reized: int): Instantiates the class variables.
+        generate_model(): Construct the Neural Network model architecture and loads
+                          the weights.
+                          
     """
     
     _instance = None

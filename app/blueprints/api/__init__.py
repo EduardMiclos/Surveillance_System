@@ -1,10 +1,9 @@
 from flask import Blueprint
 from flask_restful import Api
 
-if __name__ == "__main__":
-    from routes.FrameReceiver import FrameReceiver
-else:
-    from .routes.FrameReceiver import FrameReceiver
+from .routes.FrameReceiver import FrameReceiver
+from .routes.PreprocessInformer import PreprocessInformer
+
 
 """
 Creating the Blueprint for the API.
@@ -18,5 +17,15 @@ api = Api(api_bp)
 
 """
 Adding all the necessary resources to the blueprint's api.
+"""
+
+"""
+GET resources.
+"""
+api.add_resource(PreprocessInformer, '/get/preprocessinfo')
+
+
+"""
+POST resources.
 """
 api.add_resource(FrameReceiver, '/send/frames')

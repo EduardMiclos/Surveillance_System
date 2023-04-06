@@ -1,14 +1,9 @@
 import numpy as np
 import cv2 as cv
 
-if __name__ == "__main__":
-    from InputAdapter import InputAdapter
-    from InputMode import InputMode
-    from NNModel import NNModel
-else:
-    from .InputAdapter import InputAdapter
-    from .InputMode import InputMode
-    from .NNModel import NNModel
+from .InputMode import InputMode
+from .InputAdapter import InputAdapter
+from .NNModel import NNModel
     
 
 class NNAdapter:

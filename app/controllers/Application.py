@@ -1,11 +1,7 @@
 from flask import Flask
 from flask_restful import Api, Resource
 
-if __name__ == "__main__":
-    from WSGI import WSGI
-else:
-    from .WSGI import WSGI
-
+from .WSGI import WSGI
 
 class Application:
     """
@@ -53,8 +49,7 @@ class Application:
         """
         Running the app
         """
-
-        self.app.run(debug = debug)
+        self.app.run(debug = debug, port = self.port)
 
             
 

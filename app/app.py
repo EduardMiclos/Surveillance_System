@@ -6,7 +6,7 @@ from blueprints.api import api_bp
 """
 Creating the application.
 """
-application = Application()
+application = Application(port = "8080")
 
 """
 Passing the blueprints to the current application.

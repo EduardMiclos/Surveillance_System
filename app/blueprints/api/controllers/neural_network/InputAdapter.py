@@ -1,9 +1,6 @@
 import numpy as np
 
-if __name__ == "__main__":
-    from InputMode import InputMode
-else:
-    from .InputMode import InputMode
+from .InputMode import InputMode
 
 class InputAdapter:
 
@@ -17,13 +14,12 @@ class InputAdapter:
     across the frames.
 
     Args:
-        data (object): The chunk of frames.
-        input_mode (InputMode): The type of the input data (frames, differences or both).
+        frame_size (int): The size (width = height) of the image.
         normalize (bool): Boolean variable. Perform normalization or not.
         crop_size (int): Desired size after cropping.
         chunk_length (int): The length of the frames chunk.
-        frame_size (int): The size (width = height) of the image.
         background_suppress (bool): Boolean variable. Perform background suppress or not.
+        input_mode (InputMode): The type of the input data (frames, differences or both).
     Methods:
         __init__(frame_size: int, normalize: bool, 
                  crop_size: int, chunk_length: int, background_suppress: bool, 
@@ -40,7 +36,13 @@ class InputAdapter:
                           
     """
 
-    def __init__(self, frame_size: int, normalize: bool = True, crop_size: int = 224, chunk_length: int = 32, background_suppress: bool = True, input_mode: InputMode = InputMode.BOTH):
+    def __init__(self, 
+                 frame_size: int, 
+                 normalize: bool = True, 
+                 crop_size: int = 224, 
+                 chunk_length: int = 32, 
+                 background_suppress: bool = True, 
+                 input_mode: InputMode = InputMode.BOTH) -> None:
         self.frame_size = frame_size
         self.normalize = normalize
         self.crop_size = crop_size
@@ -48,7 +50,7 @@ class InputAdapter:
         self.background_suppress = background_suppress
         self.input_mode = input_mode
 
-    def crop_center(self, data: np.array, x_crop: int, y_crop: int):
+    def crop_center(self, data: np.array, x_crop: int, y_crop: int) -> np.array:
         """
         This method crops the input frames to the center.
         """
@@ -62,26 +64,26 @@ class InputAdapter:
         data = data[:, y_start:y_end, x_start:x_end, :]
         return data
 
-    def normalize_data(self, data: np.array):
+    def normalize_data(self, data: np.array) -> np.array:
         data = (data / 255.0).astype(np.float32)
         mean = np.mean(data)
         std = np.std(data)
         return (data - mean) / std
 
-    def frame_difference(self, data: np.array):
+    def frame_difference(self, data: np.array) -> np.array:
         out = []
         for i in range(self.chunk_length - 1):
             out.append(data[i + 1] - data[i])
 
         return np.array(out, dtype = np.float32)
 
-    def background_suppression(self, data: np.array):
+    def background_suppression(self, data: np.array) -> np.array:
         video = np.array(data, dtype = np.float32)
         avg_back = np.mean(video, axis = 0)
         video = np.abs(video - avg_back)
         return video
 
-    def transform_data(self, data: object):
+    def transform_data(self, data: object) -> object:
 
         """
         Converting the data to float32.
