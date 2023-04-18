@@ -1,6 +1,7 @@
 import numpy as np
 
 from .InputMode import InputMode
+from .utils import *
 
 class InputAdapter:
 
@@ -54,34 +55,16 @@ class InputAdapter:
         """
         This method crops the input frames to the center.
         """
-        x = self.frame_size
-        y = self.frame_size
-        x_start = x_crop
-        x_end = x - x_crop
-        y_start = y_crop
-        y_end = y - y_crop
-
-        data = data[:, y_start:y_end, x_start:x_end, :]
-        return data
+        return center_crop(self.frame_size, data, x_crop, y_crop)
 
     def normalize_data(self, data: np.array) -> np.array:
-        data = (data / 255.0).astype(np.float32)
-        mean = np.mean(data)
-        std = np.std(data)
-        return (data - mean) / std
+        return normalization(data)
 
     def frame_difference(self, data: np.array) -> np.array:
-        out = []
-        for i in range(self.chunk_length - 1):
-            out.append(data[i + 1] - data[i])
-
-        return np.array(out, dtype = np.float32)
+        return frame_difference(self.chunk_length, data)
 
     def background_suppression(self, data: np.array) -> np.array:
-        video = np.array(data, dtype = np.float32)
-        avg_back = np.mean(video, axis = 0)
-        video = np.abs(video - avg_back)
-        return video
+        return backgr_suppr(data)
 
     def transform_data(self, data: object) -> object:
 
