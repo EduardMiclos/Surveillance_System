@@ -21,7 +21,7 @@ Adding all the necessary resources to the blueprint's api.
 """
 GET resources.
 """
-api.add_resource(Login, '/login')
+api.add_resource(Login, '/login', '/')
 
 
 """
