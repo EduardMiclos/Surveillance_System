@@ -12,7 +12,7 @@ application = Application(port = "8080")
 """
 Passing the blueprints to the current application.
 """
-app = application.create_app(blueprints = [api_bp, site_bp])
+app = application.create_app(blueprints = [api_bp, site_bp], config_file="config.py")
 
 if __name__ == "__main__":
     application.run()

@@ -7,7 +7,7 @@ class WSGI:
 
     Uses gunicorn to initialize a gateway interface to a specified port. This
     class makes use of the subprocess library for invoking subprocesses and
-    runs a command described by arguments.
+    runs a command described by the arguments.
 
     Args:
         app_module (str): The name of the Python module that contains the
