@@ -1,15 +1,21 @@
+# Standard library imports
 import tensorflow as tf
 import numpy as np
 import cv2 as cv
 import os
+
+# Third party imports
 from flask_restful import Resource, request
 
-from .schemas.FrameReceiverSchema import frame_receiver_schema
-from ..controllers.neural_network.NNAdapter import NNAdapter
-from ..controllers.neural_network import config
+# Local application imports
+from ..schemas.FrameReceiverSchema import frame_receiver_schema
+from ...controllers.neural_network.NNAdapter import NNAdapter
+from ...controllers.neural_network import config
+from .ReceiverInterface import ReceiverInterface
 
 
-class FrameReceiver(Resource):
+class FrameReceiver(ReceiverInterface):
+    base_route = f'{ReceiverInterface.base_route}/frames'
     nn_adapter = None
     
     """

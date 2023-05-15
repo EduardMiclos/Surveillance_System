@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restful import Api
 
-from .routes.Login import Login
+from .routes import *
 
 
 """
@@ -21,7 +21,7 @@ Adding all the necessary resources to the blueprint's api.
 """
 GET resources.
 """
-api.add_resource(Login, '/login', '/')
+api.add_resource(Login, '/', '/login')
 
 
 """

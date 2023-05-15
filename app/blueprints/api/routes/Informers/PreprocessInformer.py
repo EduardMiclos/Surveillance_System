@@ -1,9 +1,10 @@
-from flask_restful import Resource
+# Local application imports
+from ...controllers import Response, config
+from .InformerInterface import InformerInterface
 
-from ..controllers.neural_network import config
-from ..controllers.Response import Response
-
-class PreprocessInformer(Resource):
+class PreprocessInformer(InformerInterface):
+    base_route = f'{InformerInterface.base_route}/preprocess'
+    
     def get(self):
         response = Response()
         

@@ -20,12 +20,12 @@ class Application:
     def __init__(self, port: str = "8080"):
         self.port = port
     
-    def create_app(self, blueprints: object, config_file: object = 'config.py'):
+    def create_app(self, blueprints: object, config_file: str = 'config.py'):
         """
         Creating the Flask application.
         """
         self.app = Flask(__name__, instance_relative_config = True)
-        
+        print(self.app.static_folder)
         """
         Setting up the configuration for the Flask application.
         """

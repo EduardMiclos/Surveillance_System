@@ -1,19 +1,21 @@
+# Standard library imports
 import os
 import time
 import stat
 from datetime import datetime
 
-from flask_restful import Resource
+# Third party imports
 from flask import send_file
 
-from . import NN_UTILS_PATH
+# Local application imports
+from .config import NN_UTILS_PATH
+from .ProviderInterface import ProviderInterface
 
-class CenterCropProvider(Resource):
+class CenterCropProvider(ProviderInterface):
     file_path = f'{NN_UTILS_PATH}/center_crop.py'
-    request_endpoint = 'centercrop'
+    base_route = f'{ProviderInterface.base_route}/centercrop'
     
     def get(self):
-        
         file_status = os.stat(CenterCropProvider.file_path)
         last_modified = time.ctime(file_status[stat.ST_MTIME])
         last_modified = datetime.strptime(last_modified,"%a %b %d %H:%M:%S %Y")

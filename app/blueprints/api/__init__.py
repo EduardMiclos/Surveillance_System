@@ -1,13 +1,7 @@
 from flask import Blueprint
-from flask_restful import Api
+from flask_restful import Api, Resource
 
-from .routes.FrameReceiver import FrameReceiver
-from .routes.PreprocessInformer import PreprocessInformer
-from .routes.BackgrSupprProvider import BackgrSupprProvider
-from .routes.CenterCropProvider import CenterCropProvider
-from .routes.FrameDifferenceProvider import FrameDifferenceProvider
-from .routes.NormalizationProvider import NormalizationProvider
-from .routes.UtilsInformer import UtilsInformer
+from .routes import *
 
 """
 Creating the Blueprint for the API.
@@ -19,29 +13,49 @@ Creating the API for this specific blueprint.
 """
 api = Api(api_bp)
 
-"""
-Adding all the necessary resources to the blueprint's api.
-"""
 
 """
-GET resources.
+Adding all resources resources.
 """
 
 """
 Informers
 """
-api.add_resource(PreprocessInformer, '/get/info/preprocess')
-api.add_resource(UtilsInformer, '/get/info/utils')
+for resource_class in Informers.InformerInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
+    
+    
+"""
+Providers
+"""
+for resource_class in Providers.ProviderInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
+
 
 """
-File providers
+Receivers
 """
-api.add_resource(BackgrSupprProvider, f'/get/utils/{BackgrSupprProvider.request_endpoint}')
-api.add_resource(CenterCropProvider, f'/get/utils/{CenterCropProvider.request_endpoint}')
-api.add_resource(FrameDifferenceProvider, f'/get/utils/{FrameDifferenceProvider.request_endpoint}')
-api.add_resource(NormalizationProvider, f'/get/utils/{NormalizationProvider.request_endpoint}')
+for resource_class in Receivers.ReceiverInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
+    
+# """
+# Informers
+# """
+# api.add_resource(PreprocessInformer, '/get/info/preprocess')
+# api.add_resource(UtilsInformer, '/get/info/utils')
 
-"""
-POST resources.
-"""
-api.add_resource(FrameReceiver, '/send/frames')
+# """
+# File providers
+# """
+# api.add_resource(BackgrSupprProvider, f'/get/utils/{BackgrSupprProvider.base_route}')
+# api.add_resource(CenterCropProvider, f'/get/utils/{CenterCropProvider.base_route}')
+# api.add_resource(FrameDifferenceProvider, f'/get/utils/{FrameDifferenceProvider.base_route}')
+# api.add_resource(NormalizationProvider, f'/get/utils/{NormalizationProvider.base_route}')
+
+# print(Resource.__subclasses__()[0].__bases__);
+
+
+# """
+# POST resources.
+# """
+# api.add_resource(FrameReceiver, '/send/frames')
