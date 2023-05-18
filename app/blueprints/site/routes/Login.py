@@ -7,6 +7,6 @@ class Login(Resource):
        headers = {'Content-Type': 'text/html'}
        
        return make_response(
-           render_template('base.html'), 
+           render_template('login.html'), 
            200, headers
            )

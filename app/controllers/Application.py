@@ -25,7 +25,7 @@ class Application:
         Creating the Flask application.
         """
         self.app = Flask(__name__, instance_relative_config = True)
-        print(self.app.static_folder)
+        
         """
         Setting up the configuration for the Flask application.
         """
