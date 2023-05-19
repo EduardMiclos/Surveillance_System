@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_restful import Api
+from flask_restful import Api, Resource
 
 from .routes import *
 
@@ -21,8 +21,9 @@ Adding all the necessary resources to the blueprint's api.
 """
 GET resources.
 """
-api.add_resource(Login, '/', '/login')
 
+for resource_class in ViewerInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
 
 """
 POST resources.

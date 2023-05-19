@@ -29,14 +29,7 @@ class WSGI:
         self.port = port
     
     def run(self):
-        try:
-            """
-            If there's any process running on port 8080, kill it.
-            """
-            subprocess.run(['fuser',
-                            '-k',
-                            '8080/tcp'])
-            
+        try:   
             subprocess.run(['gunicorn', 
                             f'{self.app_module}:{self.application_instance}', 
                             '--bind',
