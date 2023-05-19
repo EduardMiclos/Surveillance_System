@@ -1,3 +1,5 @@
+import subprocess
+
 from flask import Flask
 from flask_restful import Api, Resource
 
@@ -39,12 +41,20 @@ class Application:
 
         return self.app
 
-    def run(self, debug: bool = False):
+    def run(self, debug: bool = False, prod: bool = True):
+        """
+        If there's any process running on the specified port, kill it.
+        """
+        subprocess.run(['fuser',
+                        '-k',
+                        f'{self.port}/tcp'])
+        
         """
         Creating and running the web server gateway interface.
         """
-        self.wsgi = WSGI(port = self.port)
-        self.wsgi.run()
+        if prod:
+            self.wsgi = WSGI(port = self.port)
+            self.wsgi.run()
 
         """
         Running the app

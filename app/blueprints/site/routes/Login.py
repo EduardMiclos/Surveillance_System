@@ -1,12 +1,17 @@
+# Third party imports
 from flask import render_template, make_response
-from flask_restful import Resource
+
+# Local application imports
+from .ViewerInterface import ViewerInterface
 
 
-class Login(Resource):
-   def get(self):
-       headers = {'Content-Type': 'text/html'}
+class Login(ViewerInterface):
+    base_route = f'{ViewerInterface.base_route}/login'
+    
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
        
-       return make_response(
-           render_template('login.html'), 
-           200, headers
-           )
+        return make_response(
+            render_template('login.html'), 
+            200, headers
+            )

@@ -7,7 +7,7 @@ from blueprints.site import site_bp
 """
 Creating the application.
 """
-application = Application(port = "8080")
+application = Application()
 
 """
 Passing the blueprints to the current application.
@@ -15,4 +15,4 @@ Passing the blueprints to the current application.
 app = application.create_app(blueprints = [api_bp, site_bp], config_file="config.py")
 
 if __name__ == "__main__":
-    application.run()
+    application.run(prod = False)
