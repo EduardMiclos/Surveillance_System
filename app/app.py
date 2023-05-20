@@ -1,10 +1,20 @@
 from flask import Flask
+from flask_migrate import Migrate
+from flask_login import LoginManager
 
-from controllers.Application import Application
-from blueprints.api import api_bp
-from blueprints.site import site_bp
-from database.database import db
-from instance import Config
+if __name__ == 'app':
+    from controllers.Application import Application
+    from blueprints.api import api_bp
+    from blueprints.site import site_bp
+    from database.database import db
+    from instance import Config
+else:
+    import sys
+    from .controllers.Application import Application
+    from .blueprints.api import api_bp
+    from .blueprints.site import site_bp
+    from .database.database import db
+    from .instance import Config
 
 """
 Creating the application.
@@ -14,12 +24,17 @@ application = Application()
 """
 Passing the blueprints to the current application.
 """
-app = application.create_app(blueprints = [api_bp, site_bp], config = Config)
+app = application.create_app(blueprints = [api_bp, site_bp], config_object = Config)
+
+if __name__ == 'app.app':
+    application.kill_port()
 
 """
 Initializing the database.
 """
 db.init_app(app)
 
-if __name__ == "__main__":
-    application.run(prod = False)
+"""
+Initializing the database migration engine.
+"""
+migrate = Migrate(app, db)

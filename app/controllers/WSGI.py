@@ -1,4 +1,5 @@
 import subprocess
+from time import sleep
 
 class WSGI:
     """
@@ -29,11 +30,21 @@ class WSGI:
         self.port = port
     
     def run(self):
-        try:   
+        try:
+            """
+            Killing the port.
+            """
+            subprocess.run(['fuser',
+                        '-k',
+                        f'{self.port}/tcp'])
+        
+            sleep(3)
+        
             subprocess.run(['gunicorn', 
                             f'{self.app_module}:{self.application_instance}', 
                             '--bind',
                             f'0.0.0.0:{self.port}'], check = True)
+            
         except subprocess.CalledProcessError as err:
             print(f'ERROR: Occured when trying to initialize a gateway interface.\nError code: {err.returncode}\nError output: {err.output}')
             

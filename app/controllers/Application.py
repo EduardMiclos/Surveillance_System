@@ -1,9 +1,10 @@
 import subprocess
+from time import sleep
 
 from flask import Flask
 from flask_restful import Api, Resource
 
-from .WSGI import WSGI
+PORT_KILL_SLEEP_TIME_SEC = 3
 
 class Application:
     """
@@ -41,7 +42,7 @@ class Application:
 
         return self.app
 
-    def run(self, debug: bool = False, prod: bool = True):
+    def kill_port(self):
         """
         If there's any process running on the specified port, kill it.
         """
@@ -49,18 +50,11 @@ class Application:
                         '-k',
                         f'{self.port}/tcp'])
         
-        """
-        Creating and running the web server gateway interface.
-        """
-        if prod:
-            self.wsgi = WSGI(port = self.port)
-            self.wsgi.run()
-
-        """
-        Running the app
-        """
-        self.app.run(debug = debug, port = self.port)
-
+        sleep(PORT_KILL_SLEEP_TIME_SEC)
+        return self.app
+         
+    def run(self):
+        self.app.run(debug = False, port = self.port)
             
 
         
