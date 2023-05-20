@@ -46,3 +46,7 @@ body {
     zoom: 0.9; /* Adjust the zoom level as needed */
     width: 100%;
   }
+
+  #surveillance-camera-table {
+    zoom: 0.8;
+  }

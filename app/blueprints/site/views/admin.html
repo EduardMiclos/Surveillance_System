@@ -223,6 +223,7 @@
             <thead>
               <tr>
                 <th>Denumire</th>
+                <th>Status</th>
                 <th>Descriere</th>
                 <th>Data inițierii</th>
                 <th>Up-time</th>
@@ -236,6 +237,7 @@
                   <i class="fas fa-video"></i>&nbsp;
                   <b>CAMERA_DE_ZI_1</b>
                 </td>
+                <td>Activă</td>
                 <td>Funcționează în camera de zi.</td>
                 <td>2023-05-01, 16:22</td>
                 <td>18 ore</td>
@@ -331,86 +333,30 @@
     $('#users-table').DataTable({
       paging: true,
       lengthChange: false,
+      pagingType: 'simple',
       pageLength: 10,
       language: {
-        "sEmptyTable":    "Niciun rezultat găsit",
-        "sInfo":          "",
-        "sInfoEmpty":     "",
-        "sInfoFiltered":  "(filtrate dintr-un total de _MAX_ înregistrări)",
-        "sInfoPostFix":   "",
-        "sInfoThousands": ",",
-        "sLoadingRecords": "Se încarcă...",
-        "sProcessing":    "Se procesează...",
-        "sSearch":        "Caută:",
-        "sZeroRecords":   "Niciun rezultat găsit",
-        "oPaginate": {
-          "sFirst":    "Prima pagină",
-          "sLast":     "Ultima pagină",
-          "sNext":     "Pagina următoare",
-          "sPrevious": "Pagina anterioară"
-        },
-        "oAria": {
-          "sSortAscending":  ": activează pentru a sorta coloana în ordine crescătoare",
-          "sSortDescending": ": activează pentru a sorta coloana în ordine descrescătoare"
-        }
+        url: 'static/datatables/RO_RO.lang'
       },
     });
 
     var footageTable = $('#footage-table').DataTable({
       paging: true,
       lengthChange: false,
+      pagingType: 'simple',
       pageLength: 10,
       language: {
-        "sEmptyTable":    "Niciun rezultat găsit",
-        "sInfo":          "",
-        "sInfoEmpty":     "",
-        "sInfoFiltered":  "(filtrate dintr-un total de _MAX_ înregistrări)",
-        "sInfoPostFix":   "",
-        "sInfoThousands": ",",
-        "sLengthMenu":    "Afișează _MENU_ înregistrări pe pagină",
-        "sLoadingRecords": "Se încarcă...",
-        "sProcessing":    "Se procesează...",
-        "sSearch":        "Caută:",
-        "sZeroRecords":   "Niciun rezultat găsit",
-        "oPaginate": {
-          "sFirst":    "Prima pagină",
-          "sLast":     "Ultima pagină",
-          "sNext":     "Pagina următoare",
-          "sPrevious": "Pagina anterioară"
-        },
-        "oAria": {
-          "sSortAscending":  ": activează pentru a sorta coloana în ordine crescătoare",
-          "sSortDescending": ": activează pentru a sorta coloana în ordine descrescătoare"
-        }
+        url: 'static/datatables/RO_RO.lang'
       }
     });
 
     var surveillanceCameraTable = $('#surveillance-camera-table').DataTable({
       paging: true,
       lengthChange: false,
+      pagingType: 'simple',
       pageLength: 10,
       language: {
-        "sEmptyTable":    "Niciun rezultat găsit",
-        "sInfo":          "",
-        "sInfoEmpty":     "",
-        "sInfoFiltered":  "(filtrate dintr-un total de _MAX_ înregistrări)",
-        "sInfoPostFix":   "",
-        "sInfoThousands": ",",
-        "sLengthMenu":    "Afișează _MENU_ înregistrări pe pagină",
-        "sLoadingRecords": "Se încarcă...",
-        "sProcessing":    "Se procesează...",
-        "sSearch":        "Caută:",
-        "sZeroRecords":   "Niciun rezultat găsit",
-        "oPaginate": {
-          "sFirst":    "Prima pagină",
-          "sLast":     "Ultima pagină",
-          "sNext":     "Pagina următoare",
-          "sPrevious": "Pagina anterioară"
-        },
-        "oAria": {
-          "sSortAscending":  ": activează pentru a sorta coloana în ordine crescătoare",
-          "sSortDescending": ": activează pentru a sorta coloana în ordine descrescătoare"
-        }
+        url: 'static/datatables/RO_RO.lang'
       }
     });
 
