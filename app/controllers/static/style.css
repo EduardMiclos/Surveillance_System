@@ -19,7 +19,7 @@ body {
     font-weight: bold;
   }
   
-  .footage-actions {
+  .actions-list {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -29,14 +29,20 @@ body {
   .icon-action {
     display: flex;
     align-items: center;
+    padding: 5px;
   }
   
   .icon-action i {
     margin-right: 5px;
   }
 
-  .clickable :hover {
+  .clickable.icon-action:hover {
     cursor: pointer;
+    background-color: #ccc;
+    border-radius: 10px;
   }
 
-  
+  .table {
+    zoom: 0.9; /* Adjust the zoom level as needed */
+    width: 100%;
+  }
