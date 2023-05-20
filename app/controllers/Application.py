@@ -22,7 +22,7 @@ class Application:
     def __init__(self, port: str = "8080"):
         self.port = port
     
-    def create_app(self, blueprints: object, config_file: str = 'config.py'):
+    def create_app(self, blueprints: object, config_object: object):
         """
         Creating the Flask application.
         """
@@ -31,7 +31,7 @@ class Application:
         """
         Setting up the configuration for the Flask application.
         """
-        self.app.config.from_pyfile(config_file)
+        self.app.config.from_object(config_object)
 
         """
         Adding all the blueprints to the application.
