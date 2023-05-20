@@ -46,9 +46,13 @@ class Application:
         """
         If there's any process running on the specified port, kill it.
         """
-        subprocess.run(['fuser',
-                        '-k',
-                        f'{self.port}/tcp'])
+        
+        try:
+            subprocess.check_output(['fuser',
+                            '-k',
+                            f'{self.port}/tcp'], shell = True, stderr=subprocess.STDOUT)
+        except:
+            pass
         
         sleep(PORT_KILL_SLEEP_TIME_SEC)
         return self.app

@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     firstname = db.Column(db.String(50), nullable=False)
     secondname = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(80), nullable=False)
+    password_hash = db.Column(db.String(80), nullable=False)
     is_admin = db.Column(db.Boolean(), nullable=False)
 
     @hybrid_property
@@ -22,6 +22,9 @@ class User(db.Model, UserMixin):
         CheckConstraint(firstname != '', name='non_empty_firstname_check'),
         CheckConstraint(secondname != '', name='non_empty_secondname_check'),
     )
+    
+    def __repr__(self):
+        return '<User {}>'.format(self.email)
     
     
 

@@ -1,6 +1,8 @@
 import subprocess
 from time import sleep
 
+PORT_KILL_SLEEP_TIME_SEC = 3
+
 class WSGI:
     """
 
@@ -32,13 +34,16 @@ class WSGI:
     def run(self):
         try:
             """
-            Killing the port.
+            If there's any process running on the specified port, kill it.
             """
-            subprocess.run(['fuser',
-                        '-k',
-                        f'{self.port}/tcp'])
-        
-            sleep(3)
+            try:
+                subprocess.check_output(['fuser',
+                                '-k',
+                                f'{self.port}/tcp'], shell = True, stderr=subprocess.STDOUT)
+            except:
+                pass
+            
+            sleep(PORT_KILL_SLEEP_TIME_SEC)
         
             subprocess.run(['gunicorn', 
                             f'{self.app_module}:{self.application_instance}', 

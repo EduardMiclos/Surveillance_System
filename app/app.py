@@ -9,7 +9,6 @@ if __name__ == 'app':
     from database.database import db
     from instance import Config
 else:
-    import sys
     from .controllers.Application import Application
     from .blueprints.api import api_bp
     from .blueprints.site import site_bp
