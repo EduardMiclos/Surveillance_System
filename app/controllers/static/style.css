@@ -8,3 +8,35 @@ body {
     margin: 0 auto;
     display: block;
 }
+
+
+.footage-info {
+    margin-bottom: 10px;
+  }
+  
+  .footage-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .footage-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .icon-action {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-action i {
+    margin-right: 5px;
+  }
+
+  .clickable :hover {
+    cursor: pointer;
+  }
+
+  

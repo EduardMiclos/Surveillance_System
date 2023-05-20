@@ -63,6 +63,10 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Introduceți adresa de email">
                   </div>
+                  <div class="form-group">
+                    <label for="phone">Număr de telefon</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="Introduceți numărul de telefon">
+                  </div>
                   <!-- Add more form fields as needed -->
                 </form>
               </div>
@@ -77,24 +81,110 @@
   
       <div class="tab-pane fade" id="manage-footage">
         <h3>Administrare înregistrări</h3>
-        <div class="list-group mt-3">
-          <a href="#" class="list-group-item list-group-item-action" onclick="openVideoModal('static/moment.mp4')">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">Înregistrare 1</h5>
-              <small>1 mai 2023</small>
-            </div>
-            <p class="mb-1">Descriere înregistrare</p>
-            <!-- Add a video thumbnail here -->
-          </a>
-          <!-- Add more list items for other footages -->
+        
+        <div class="table-responsive">
+          <table class="table table-bordered" id="footage-table">
+            <thead style="display: none;">
+              <tr>
+                <th>Footage</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-md-7">
+                  <div class="footage-info">
+                    <h4 class="footage-title">REG_CAMERA_DE_ZI_3</h4>
+                    <p class="footage-date">2023-05-01, 16:30</p>
+                  </div>
+                </td>
+                <td class="col-md-6">
+                  <div class="footage-actions">
+                    <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                      <i class="fas fa-eye"></i>
+                      <span>Vizionează</span>
+                    </div>
+                    <div class="clickable icon-action">
+                      <i class="fas fa-edit"></i>
+                      <span>Editează</span>
+                    </div>
+                    <div class="clickable icon-action"> 
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Șterge</span>
+                    </div>
+                    <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                      <i class="fas fa-download"></i>
+                      <span>Descarcă</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-md-7">
+                  <div class="footage-info">
+                    <h4 class="footage-title">REG_GRADINA_21</h4>
+                    <p class="footage-date">2023-05-03, 19:30</p>
+                  </div>
+                </td>
+                <td class="col-md-6">
+                  <div class="footage-actions">
+                    <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                      <i class="fas fa-eye"></i>
+                      <span>Vizionează</span>
+                    </div>
+                    <div class="clickable icon-action">
+                      <i class="fas fa-edit"></i>
+                      <span>Editează</span>
+                    </div>
+                    <div class="clickable icon-action"> 
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Șterge</span>
+                    </div>
+                    <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                      <i class="fas fa-download"></i>
+                      <span>Descarcă</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-md-7">
+                  <div class="footage-info">
+                    <h4 class="footage-title">REG_BAIE_1</h4>
+                    <p class="footage-date">2023-05-19, 11:22</p>
+                  </div>
+                </td>
+                <td class="col-md-6">
+                  <div class="footage-actions">
+                    <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                      <i class="fas fa-eye"></i>
+                      <span>Vizionează</span>
+                    </div>
+                    <div class="clickable icon-action">
+                      <i class="fas fa-edit"></i>
+                      <span>Editează</span>
+                    </div>
+                    <div class="clickable icon-action"> 
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Șterge</span>
+                    </div>
+                    <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                      <i class="fas fa-download"></i>
+                      <span>Descarcă</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-  
+      
         <!-- Video player modal -->
         <div class="modal fade" id="video-player-modal" tabindex="-1" role="dialog" aria-labelledby="videoPlayerModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="videoPlayerModalLabel">Vizualizare înregistrare</h5>
+                <h5 class="modal-title" id="videoPlayerModalLabel">Vizualizare înregistrare cu potențial violent</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -108,10 +198,9 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
-
+</div>
 {% include 'footer.html' %}
 
 <script>
@@ -142,9 +231,69 @@
           "sSortAscending":  ": activează pentru a sorta coloana în ordine crescătoare",
           "sSortDescending": ": activează pentru a sorta coloana în ordine descrescătoare"
         }
+      },
+    });
+
+    var footageTable = $('#footage-table').DataTable({
+      paging: true,
+      lengthChange: false,
+      pageLength: 10,
+      language: {
+        "sEmptyTable":    "Niciun rezultat găsit",
+        "sInfo":          "",
+        "sInfoEmpty":     "",
+        "sInfoFiltered":  "(filtrate dintr-un total de _MAX_ înregistrări)",
+        "sInfoPostFix":   "",
+        "sInfoThousands": ",",
+        "sLengthMenu":    "Afișează _MENU_ înregistrări pe pagină",
+        "sLoadingRecords": "Se încarcă...",
+        "sProcessing":    "Se procesează...",
+        "sSearch":        "Caută:",
+        "sZeroRecords":   "Niciun rezultat găsit",
+        "oPaginate": {
+          "sFirst":    "Prima pagină",
+          "sLast":     "Ultima pagină",
+          "sNext":     "Pagina următoare",
+          "sPrevious": "Pagina anterioară"
+        },
+        "oAria": {
+          "sSortAscending":  ": activează pentru a sorta coloana în ordine crescătoare",
+          "sSortDescending": ": activează pentru a sorta coloana în ordine descrescătoare"
+        }
       }
     });
+
+    $('#footage-table tfoot th').each(function() {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+
+    footageTable.columns().every(function() {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function() {
+        if (that.search() == this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
   });
+
+  function editFootage(footageName) {
+    // Code to handle editing the footage
+  }
+
+  function deleteFootage(footageName) {
+    // Code to handle deleting the footage
+  }
+
+  function downloadFootage(footageName) {
+    var link = document.createElement('a');
+    link.href = footageName;
+    link.download = footageName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   function openVideoModal(videoSrc) {
     var videoPlayer = document.getElementById('video-player');
