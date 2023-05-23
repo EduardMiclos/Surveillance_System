@@ -11,7 +11,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     firstname = db.Column(db.String(50), nullable=False)
     secondname = db.Column(db.String(50), nullable=False)
-    password_hash = db.Column(db.String(80), nullable=False)
+    phone = db.Column(db.String(16))
+    password_hash = db.Column(db.String(200), nullable=False)
     is_admin = db.Column(db.Boolean(), nullable=False)
 
     def set_password(self, password):
@@ -20,12 +21,7 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    @hybrid_property
-    def is_email_valid(self):
-        return validate_email(self.email)
-
     __table_args__ = (
-        CheckConstraint(is_email_valid == True, name='valid_email_check'),
         CheckConstraint(firstname != '', name='non_empty_firstname_check'),
         CheckConstraint(secondname != '', name='non_empty_secondname_check'),
     )

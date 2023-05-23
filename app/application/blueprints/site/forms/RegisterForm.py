@@ -1,14 +1,32 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, SubmitField
+from wtforms import StringField, EmailField, BooleanField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError, Email
 
 from ....database.models import *
 
 class RegisterForm(FlaskForm):
-    email = EmailField(validators=[InputRequired(), Email(), Length(min=4, max=255)], render_kw={"placeholder": "Email"})
-    firstname = StringField(validators=[InputRequired(), Length(min=2, max=50)], render_kw={"placeholder": "Nume"})
-    secondname = StringField(validators=[InputRequired(), Length(min=2, max=50)], render_kw={"placeholder": "Prenume"})
-    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Parola"})
+    email = EmailField(validators=[InputRequired(), Email(), 
+                                   Length(min=4, max=255)], 
+                                   render_kw={
+                                       "placeholder": "Introduceți adresa de email",
+                                       "id": "email"
+                                       })
+    firstname = StringField(validators=[InputRequired(), Length(min=2, max=50)], 
+                                        render_kw={
+                                            "placeholder": "Introduceți numele",
+                                            "id": "firstname"
+                                            })
+    secondname = StringField(validators=[InputRequired(), Length(min=2, max=50)], 
+                                         render_kw={
+                                             "placeholder": "Introduceți prenumele",
+                                             "id": "secondname"
+                                            })
+    phone = StringField(validators=[InputRequired(), Length(min=5, max=15)], 
+                                    render_kw={"placeholder": "Introduceți numărul de telefon",
+                                                "id": "phone"
+                                            })
+    
+    is_admin = BooleanField(render_kw = {"id": "is_admin"})
     
     submit = SubmitField("Înregistrează")
     

@@ -33,11 +33,12 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Populate the table dynamically with user data -->
+              {% for user in users %}
+              
               <tr>
-                <td>John Doe</td>
-                <td>john@example.com</td>
-                <td>0747 628 536</td>
+                <td>{{ user.firstname }} {{ user.secondname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
                 <td>
                   <div class="actions-list">
                     <div class="clickable icon-action">
@@ -51,7 +52,8 @@
                 </div>
                 </td>
               </tr>
-              <!-- Add more rows for other users -->
+
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -70,26 +72,41 @@
               </div>
               <div class="modal-body">
                 <!-- Form fields for adding a new user -->
-                <form>
+                <form method="POST" action="">
+                  {{ form.hidden_tag() }}
+                  
                   <div class="form-group">
-                    <label for="name">Nume</label>
-                    <input type="text" class="form-control" id="name" placeholder="Introduceți numele">
+                    <label for="firstname">Nume</label>
+                    {{ form.firstname(class="form-control") }}
                   </div>
+                  
+                  <div class="form-group">
+                    <label for="secondname">Prenume</label>
+                    {{ form.secondname(class="form-control")}}
+                  </div>
+                  
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Introduceți adresa de email">
+                    {{ form.email(class="form-control") }}
                   </div>
+                  
                   <div class="form-group">
                     <label for="phone">Număr de telefon</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="Introduceți numărul de telefon">
+                    {{ form.phone(class="form-control") }}
                   </div>
-                  <!-- Add more form fields as needed -->
-                </form>
+
+                  <div class="form-group">
+                    <div class="form-check">
+                      {{ form.is_admin(class="form-check-input", id="is_admin") }}
+                      <label class="form-check-label" for="is_admin">Oferă drepturi de admin</label>
+                    </div>
+                  </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
-                <button type="button" class="btn btn-primary">Salvează</button>
+                <button type="submit" class="btn btn-primary">Înregistrează</button>
               </div>
+            </form>
             </div>
           </div>
         </div>

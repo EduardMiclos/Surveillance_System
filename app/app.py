@@ -26,7 +26,6 @@ Passing the blueprints to the current application.
 app = application.create_app(blueprints = [api_bp, site_bp], config_object = Config)
 
 if __name__ == 'app.app':
-    print(213123213)
     application.kill_port()
 
 """
