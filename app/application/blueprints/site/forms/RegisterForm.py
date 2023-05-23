@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError, Email
 
-from ..database.models import *
+from ....database.models import *
 
 class RegisterForm(FlaskForm):
     email = EmailField(validators=[InputRequired(), Email(), Length(min=4, max=255)], render_kw={"placeholder": "Email"})

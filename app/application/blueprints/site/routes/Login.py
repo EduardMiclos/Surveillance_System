@@ -3,7 +3,7 @@ from flask import render_template, make_response
 
 # Local application imports
 from .ViewerInterface import ViewerInterface
-from ....forms import *
+from ..forms import *
 
 class Login(ViewerInterface):
     base_route = f'{ViewerInterface.base_route}/login'

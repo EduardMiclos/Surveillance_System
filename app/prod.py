@@ -1,4 +1,4 @@
-from controllers.WSGI import WSGI
+from application.controllers.WSGI import WSGI
 
 wsgi = WSGI()
 wsgi.run()

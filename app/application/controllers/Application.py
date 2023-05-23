@@ -46,7 +46,6 @@ class Application:
         """
         If there's any process running on the specified port, kill it.
         """
-        
         try:
             subprocess.check_output(['fuser',
                             '-k',

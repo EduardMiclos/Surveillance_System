@@ -3,17 +3,17 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 
 if __name__ == 'app':
-    from controllers.Application import Application
-    from blueprints.api import api_bp
-    from blueprints.site import site_bp
-    from database.database import db
-    from instance import Config
+    from application.controllers.Application import Application
+    from application.blueprints.api import api_bp
+    from application.blueprints.site import site_bp
+    from application.database.database import db
+    from application.instance import Config
 else:
-    from .controllers.Application import Application
-    from .blueprints.api import api_bp
-    from .blueprints.site import site_bp
-    from .database.database import db
-    from .instance import Config
+    from .application.controllers.Application import Application
+    from .application.blueprints.api import api_bp
+    from .application.blueprints.site import site_bp
+    from .application.database.database import db
+    from .application.instance import Config
 
 """
 Creating the application.
