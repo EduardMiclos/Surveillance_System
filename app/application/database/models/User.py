@@ -1,7 +1,5 @@
 from flask_login import UserMixin
 from sqlalchemy import CheckConstraint
-from sqlalchemy.ext.hybrid import hybrid_property
-from validate_email_address import validate_email
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from ..database import *

@@ -27,7 +27,6 @@ class RegisterForm(FlaskForm):
                                             })
     
     is_admin = BooleanField(render_kw = {"id": "is_admin"})
-    
     submit = SubmitField("Înregistrează")
     
     def validate_email(self, email):

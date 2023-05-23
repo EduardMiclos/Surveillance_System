@@ -53,6 +53,7 @@ class Admin(ViewerInterface):
             register_form.process()
             
             users = User.query.all()
+            
             return make_response(
                 render_template('admin.html', 
                                 form = register_form, 

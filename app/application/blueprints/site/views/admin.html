@@ -18,7 +18,7 @@
         </picture></a>
       </li>
     </ul>
-  
+
     <div class="tab-content mt-4">
       <div class="tab-pane fade show active" id="manage-users">
         <h3>Administrare utilizatori</h3>
@@ -60,7 +60,34 @@
   
         <button class="btn btn-success mt-2" data-toggle="modal" data-target="#add-user-modal">Adăugare utilizator nou</button>
   
-        <!-- Add new user modal -->
+        {% if added_new_user %}
+
+        <div class="modal" id="user-info-modal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addUserModalLabel">Informații utilizator nou</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                <div class="d-flex flex-column align-items-center mb-3">
+                  <i class="fas fa-check-circle text-success fa-3x"></i>
+                  <strong class="mt-2 h5">Utilizator introdus cu succes!</strong>
+                </div>
+                <p class="mb-0 h5">Următoarea parolă a fost generată:</p>
+                <p class="font-weight-bold h4">{{ pwd }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">În regulă!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        {% endif %}
+
         <div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -439,6 +466,14 @@
   </div>
 </div>
 {% include 'footer.html' %}
+
+{% if added_new_user %}
+<script>
+  $(document).ready(function() {
+    $('#user-info-modal').modal('show');
+  })
+</script>
+{% endif %}
 
 <script>
   $(document).ready(function() {
