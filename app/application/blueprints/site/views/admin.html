@@ -59,140 +59,21 @@
         </div>
   
         <button class="btn btn-success mt-2" data-toggle="modal" data-target="#add-user-modal">Adăugare utilizator nou</button>
-  
-        <div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="deleteUserModalLabel">Ștergere utilizator</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              
-              <form method="POST" action="/admin/delete-user">
-              <input type="hidden" name="user_id" id="deleted-user-id" value="">
 
-              <div class="modal-body">
-                <div class="d-flex flex-column align-items-center mb-3">
-                  <i class="fas fa-trash text-danger fa-2x"></i>
-                  <strong class="mt-2 h5">Sunteți sigur că doriți să ștergeți utilizatorul?</strong>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
-                <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Șterge utilizator</button>
-              </div>
-            </form>
-            </div>
-          </div>
-        </div>
-
-        {% if added_new_user %}
-
-        <div class="modal" id="user-info-modal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="userInfoModalLabel">Informații utilizator nou</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body text-center">
-                <div class="d-flex flex-column align-items-center mb-3">
-                  <i class="fas fa-check-circle text-success fa-3x"></i>
-                  <strong class="mt-2 h5">Utilizator introdus cu succes!</strong>
-                </div>
-                <p class="mb-0 h5">Următoarea parolă a fost generată:</p>
-                <p class="font-weight-bold h4">{{ pwd }}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">În regulă!</button>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        {% endif %}
+      {% if added_new_user %}
+      {% include "modals/user-info-modal.html" %}
+      {% endif %}
 
 
-        {% if deleted_user %}
+      {% if deleted_user %}
+      {% include "modals/deleted-user-info-modal.html" %}
+      {% endif %}
 
-        <div class="modal" id="deleted-user-info-modal" tabindex="-1" role="dialog" aria-labelledby="deletedUserInfoModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="deletedUserInfoModalLabel">Informații utilizator șters</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body text-center">
-                <div class="d-flex flex-column align-items-center mb-3">
-                  <i class="fas fa-check-circle text-success fa-3x"></i>
-                  <strong class="mt-2 h5">Utilizatorul a fost șters cu succes!</strong>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">În regulă!</button>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        {% endif %}
+      {% include "modals/add-user-modal.html" %}
+      {% include "modals/edit-user-modal.html" %}
+      {% include "modals/delete-user-modal.html" %}
+    </div>
 
-        <div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Adăugare utilizator nou</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <!-- Form fields for adding a new user -->
-                <form method="POST" action="/admin/add-user">
-
-                  <div class="form-group">
-                    <label for="firstname">Nume</label>
-                    {{ form.firstname(class="form-control") }}
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="secondname">Prenume</label>
-                    {{ form.secondname(class="form-control")}}
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    {{ form.email(class="form-control") }}
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="phone">Număr de telefon</label>
-                    {{ form.phone(class="form-control") }}
-                  </div>
-
-                  <div class="form-group">
-                    <div class="form-check">
-                      {{ form.is_admin(class="form-check-input", id="is_admin") }}
-                      <label class="form-check-label" for="is_admin">Oferă drepturi de admin</label>
-                    </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
-                <button type="submit" class="btn btn-primary">Înregistrează</button>
-              </div>
-            </form>
-            </div>
-          </div>
-        </div>
-      </div>
-  
       <div class="tab-pane fade" id="manage-footage">
         <h3>Administrare înregistrări</h3>
         
@@ -312,9 +193,9 @@
             </div>
           </div>
         </div>
-    </div>
+     </div>
 
-    <div class="tab-pane fade" id="manage-surveillance-cameras">
+      <div class="tab-pane fade" id="manage-surveillance-cameras">
       <h3>Administrare camere de supraveghere</h3>
         <div class="table-responsive">
           <table class="table table-bordered" id="surveillance-camera-table">
@@ -495,60 +376,13 @@
         </div>
       </div>
     
-      <!-- Video player modal -->
-      <div class="modal fade" id="video-player-modal" tabindex="-1" role="dialog" aria-labelledby="videoPlayerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="videoPlayerModalLabel">Vizualizare înregistrare cu potențial violent</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- Video player component -->
-              <video id="video-player" controls>
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
+    {% include "modals/video-player-modal.html" %}
     
   </div>
 </div>
+
 {% include 'footer.html' %}
 
-{% if added_new_user %}
-<script>
-  $(document).ready(function() {
-    $('#user-info-modal').modal('show');
-  })
-</script>
-{% endif %}
-
-{% if deleted_user %}
-<script>
-  $(document).ready(function() {
-    $('#deleted-user-info-modal').modal('show');
-  })
-</script>
-{% endif %}
-
-<script>
-  $(document).ready(function() {
-    var userIdToDelete;
-  
-    $('.btn-delete-user').on('click', function() {
-      userIdToDelete = $(this).data('user-id');
-      $("#deleted-user-id").val(userIdToDelete);
-      
-      $('#delete-user-modal').modal('show');
-    });
-  })
-</script>
 
 <script>
   $(document).ready(function() {

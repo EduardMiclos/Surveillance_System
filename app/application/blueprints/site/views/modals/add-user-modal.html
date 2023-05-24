@@ -1,0 +1,47 @@
+<div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserModalLabel">Adăugare utilizator nou</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/admin/add-user">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label for="firstname">Nume</label>
+              {{ form.firstname(class="form-control") }}
+            </div>
+            
+            <div class="form-group">
+              <label for="secondname">Prenume</label>
+              {{ form.secondname(class="form-control")}}
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              {{ form.email(class="form-control") }}
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Număr de telefon</label>
+              {{ form.phone(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                {{ form.is_admin(class="form-check-input", id="is_admin") }}
+                <label class="form-check-label" for="is_admin">Oferă drepturi de admin</label>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+          <button type="submit" class="btn btn-primary" id="confirm-add-btn">Înregistrează</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>

@@ -1,4 +1,4 @@
-from flask import render_template, make_response, redirect, session
+from flask import redirect, session
 from password_generator import PasswordGenerator
 
 from .AdminInterface import AdminInterface
