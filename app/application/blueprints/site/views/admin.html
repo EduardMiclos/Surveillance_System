@@ -47,7 +47,7 @@
                     </div>
                     <div class="clickable icon-action"> 
                       <i class="fas fa-trash-alt"></i>
-                      <span>Șterge</span>
+                      <span class="btn-delete-user" data-user-id="{{ user.id }}">Șterge</span>
                     </div>
                 </div>
                 </td>
@@ -60,6 +60,30 @@
   
         <button class="btn btn-success mt-2" data-toggle="modal" data-target="#add-user-modal">Adăugare utilizator nou</button>
   
+        <div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteUserModalLabel">Ștergere utilizator</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="d-flex flex-column align-items-center mb-3">
+                  <i class="fas fa-trash text-danger fa-2x"></i>
+                  <strong class="mt-2 h5">Sunteți sigur că doriți să ștergeți utilizatorul?</strong>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+                <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Șterge utilizator</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
         {% if added_new_user %}
 
         <div class="modal" id="user-info-modal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel">
@@ -99,7 +123,7 @@
               </div>
               <div class="modal-body">
                 <!-- Form fields for adding a new user -->
-                <form method="POST" action="">
+                <form method="POST" action="/admin/add-user">
                   {{ form.hidden_tag() }}
                   
                   <div class="form-group">
@@ -474,6 +498,31 @@
   })
 </script>
 {% endif %}
+
+<script>
+  $(document).ready(function() {
+    var userIdToDelete;
+  
+    // Event listener for delete button click
+    $('.btn-delete-user').on('click', function() {
+      userIdToDelete = $(this).data('user-id');
+      
+      // Show the confirmation modal
+      $('#delete-user-modal').modal('show');
+    });
+    
+    // Event listener for confirm deletion button click
+    $('#confirm-delete-btn').on('click', function() {
+      if (userIdToDelete) {
+        // Perform the deletion action using the stored user ID
+        console.log(`se sterge userul ${userIdToDelete}`)
+        
+        // Hide the confirmation modal
+        $('#delete-user-modal').modal('hide');
+      }
+    });
+  })
+</script>
 
 <script>
   $(document).ready(function() {
