@@ -10,9 +10,7 @@ class AddUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/add-user'
     
     def post(self):
-        headers = {'Content-Type': 'text/html'}
         register_form = RegisterForm()
-    
         
         if register_form.validate_on_submit():
             password_generator = PasswordGenerator()

@@ -6,3 +6,4 @@ from .Admin import Admin
 from .ViewerInterface import ViewerInterface
 from .AdminInterface import AdminInterface
 from .AddUser import AddUser
+from .DeleteUser import DeleteUser

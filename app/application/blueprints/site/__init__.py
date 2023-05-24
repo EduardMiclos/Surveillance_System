@@ -25,7 +25,6 @@ GET resources.
 for resource_class in ViewerInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
 
-print(AdminInterface.__subclasses__())
 for resource_class in AdminInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
 
