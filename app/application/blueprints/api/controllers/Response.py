@@ -44,3 +44,7 @@ class Response:
         self.set_code(200)
         self.set_message('Success')
         
+    def set_not_found(self):
+        self.set_code(404)
+        self.set_status("Not found")
+        
