@@ -1,0 +1,31 @@
+<div class="modal" id="added-user-info-modal" tabindex="-1" role="dialog" aria-labelledby="addedUserInfoModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="addedUserInfoModalLabel">Informații utilizator nou</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="d-flex flex-column align-items-center mb-3">
+            <i class="fas fa-check-circle text-success fa-3x"></i>
+            <strong class="mt-2 h5">Utilizator introdus cu succes!</strong>
+          </div>
+          <p class="mb-0 h5">Următoarea parolă a fost generată:</p>
+          <p class="font-weight-bold h4">{{ pwd }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">În regulă!</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% if added_new_user %}
+<script>
+  $(document).ready(function() {
+    $('#added-user-info-modal').modal('show');
+  })
+</script>
+{% endif %}

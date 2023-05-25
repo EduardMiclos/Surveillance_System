@@ -1,0 +1,84 @@
+<div class="modal fade" id="edit-user-modal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="editUserModalLabel">Editare informații utilizator</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <form method="POST" action="/admin/edit-user">
+        <input type="hidden" name="user_id" id="edited-user-id" value="">
+
+        <div class="modal-body">
+            {{ useredit_form.hidden_tag() }}
+            <div class="form-group">
+              <label for="firstname">Nume</label>
+              {{ useredit_form.firstname(class="form-control", id="user-firstname") }}
+            </div>
+            
+            <div class="form-group">
+              <label for="secondname">Prenume</label>
+              {{ useredit_form.secondname(class="form-control", id="user-secondname")}}
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              {{ useredit_form.email(class="form-control", id="user-email") }}
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Număr de telefon</label>
+              {{ useredit_form.phone(class="form-control", id="user-phone") }}
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                {{ useredit_form.is_admin(class="form-check-input", id="user-is_admin") }}
+                <label class="form-check-label" for="is_admin">Drepturi de admin</label>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+          <button type="submit" class="btn btn-primary" id="confirm-edit-btn">Salvează</button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+      var userIdToEdit;
+    
+      $('.btn-edit-user').on('click', function() {
+        userIdToEdit = $(this).data('user-id');
+        $("#edited-user-id").val(userIdToEdit);
+
+        $.ajax({
+          url: `/admin/get-user/${userIdToEdit}`,
+          method: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            firstname = response.Data.User['firstname']
+            secondname = response.Data.User['secondname']
+            email = response.Data.User['email']
+            phone = response.Data.User['phone']
+            is_admin = response.Data.User['is_admin']
+
+            $('#edited-user-id').val(userIdToEdit)
+            $('#user-firstname').val(firstname)
+            $('#user-secondname').val(secondname)
+            $('#user-email').val(email)
+            $('#user-phone').val(phone)
+            $('#user-is_admin').prop("checked", is_admin)
+
+            $('#edit-user-modal').modal('show');
+          }
+        })
+
+      });
+    })
+</script>
