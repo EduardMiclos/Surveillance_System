@@ -1,13 +1,14 @@
 from flask_login import login_required
 
 from ....api.controllers.Response import Response
-from .AdminInterface import AdminInterface
+from .AdminInterface import AdminInterface, admin_required
 from .....database.models import User
 
 class GetUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/get-user/<int:user_id>'
     
     @login_required
+    @admin_required
     def get(self, user_id):
         user = User.query.get(user_id)
     

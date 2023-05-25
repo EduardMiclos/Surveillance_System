@@ -1,6 +1,7 @@
-from flask import Flask
+from functools import wraps
+from flask import Flask, abort
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 
 if __name__ == 'app':
     from application.controllers.Application import Application
@@ -54,4 +55,3 @@ it needs the application's help in loading a user.
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
-

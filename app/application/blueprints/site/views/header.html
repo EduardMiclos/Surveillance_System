@@ -33,9 +33,11 @@
             <li class="nav-item">
               <a class="nav-link" href="/profile"><i class="fas fa-user me-2">&nbsp;</i>Profil</a>
             </li>
+            {% if current_user.is_authenticated and current_user.is_admin %}
             <li class="nav-item">
               <a class="nav-link" href="/admin"><i class="fas fa-cogs me-2">&nbsp;</i>Administrare</a>
             </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-2">&nbsp;</i>Delogare</a>
             </li>

@@ -1,9 +1,9 @@
 # Third party imports
-from flask import render_template, make_response, session
-from flask_login import login_required
+from flask import render_template, make_response, session, redirect, abort
+from flask_login import login_required, current_user
 
 # Local application imports
-from .AdminInterface import AdminInterface
+from .AdminInterface import AdminInterface, admin_required
 from ...forms import RegisterForm
 from ...forms import UserEditForm
 
@@ -13,6 +13,7 @@ class Admin(AdminInterface):
     base_route = AdminInterface.base_route
     
     @login_required
+    @admin_required
     def get(self):
         headers = {'Content-Type': 'text/html'}
        
