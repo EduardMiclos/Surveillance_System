@@ -1,9 +1,9 @@
 from flask import redirect, session, request
 
 from .AdminInterface import AdminInterface
-from ....database import db
-from ..forms import UserEditForm
-from ....database.models import User
+from .....database import db
+from ...forms import UserEditForm
+from .....database.models import User
 
 class EditUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/edit-user'

@@ -2,8 +2,8 @@ from flask import redirect, session, request
 
 
 from .AdminInterface import AdminInterface
-from ....database import db
-from ....database.models import User
+from .....database import db
+from .....database.models import User
 
 class DeleteUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/delete-user'

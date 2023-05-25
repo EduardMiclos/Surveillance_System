@@ -1,6 +1,6 @@
-from ...api.controllers.Response import Response
+from ....api.controllers.Response import Response
 from .AdminInterface import AdminInterface
-from ....database.models import User
+from .....database.models import User
 
 class GetUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/get-user/<int:user_id>'

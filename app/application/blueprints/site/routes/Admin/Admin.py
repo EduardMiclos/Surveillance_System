@@ -4,10 +4,10 @@ from flask import render_template, make_response, session
 
 # Local application imports
 from .AdminInterface import AdminInterface
-from ..forms import RegisterForm
-from ..forms import UserEditForm
+from ...forms import RegisterForm
+from ...forms import UserEditForm
 
-from ....database.models import User
+from .....database.models import User
 
 class Admin(AdminInterface):
     base_route = AdminInterface.base_route

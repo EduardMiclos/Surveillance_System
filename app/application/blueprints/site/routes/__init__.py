@@ -2,10 +2,5 @@ from .Base import Base
 from .Login import Login
 from .Profile import Profile
 from .History import History
-from .Admin import Admin
+from .Admin import *
 from .ViewerInterface import ViewerInterface
-from .AdminInterface import AdminInterface
-from .AddUser import AddUser
-from .EditUser import EditUser
-from .DeleteUser import DeleteUser
-from .GetUser import GetUser
