@@ -1,8 +1,8 @@
-<div class="modal" id="user-info-modal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel">
+<div class="modal" id="added-user-info-modal" tabindex="-1" role="dialog" aria-labelledby="addedUserInfoModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="userInfoModalLabel">Informații utilizator nou</h5>
+          <h5 class="modal-title" id="addedUserInfoModalLabel">Informații utilizator nou</h5>
           <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -25,7 +25,7 @@
 {% if added_new_user %}
 <script>
   $(document).ready(function() {
-    $('#user-info-modal').modal('show');
+    $('#added-user-info-modal').modal('show');
   })
 </script>
 {% endif %}

@@ -12,37 +12,37 @@
         <input type="hidden" name="user_id" id="edited-user-id" value="">
 
         <div class="modal-body">
-            {{ form.hidden_tag() }}
+            {{ useredit_form.hidden_tag() }}
             <div class="form-group">
               <label for="firstname">Nume</label>
-              {{ form.firstname(class="form-control") }}
+              {{ useredit_form.firstname(class="form-control", id="user-firstname") }}
             </div>
             
             <div class="form-group">
               <label for="secondname">Prenume</label>
-              {{ form.secondname(class="form-control")}}
+              {{ useredit_form.secondname(class="form-control", id="user-secondname")}}
             </div>
             
             <div class="form-group">
               <label for="email">Email</label>
-              {{ form.email(class="form-control") }}
+              {{ useredit_form.email(class="form-control", id="user-email") }}
             </div>
             
             <div class="form-group">
               <label for="phone">Număr de telefon</label>
-              {{ form.phone(class="form-control") }}
+              {{ useredit_form.phone(class="form-control", id="user-phone") }}
             </div>
 
             <div class="form-group">
               <div class="form-check">
-                {{ form.is_admin(class="form-check-input", id="is_admin") }}
-                <label class="form-check-label" for="is_admin">Oferă drepturi de admin</label>
+                {{ useredit_form.is_admin(class="form-check-input", id="user-is_admin") }}
+                <label class="form-check-label" for="is_admin">Drepturi de admin</label>
               </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
-          <button type="submit" class="btn btn-primary" id="confirm-delete-btn">Salvează</button>
+          <button type="submit" class="btn btn-primary" id="confirm-edit-btn">Salvează</button>
         </div>
       </form>
       </div>
@@ -57,8 +57,28 @@
         userIdToEdit = $(this).data('user-id');
         $("#edited-user-id").val(userIdToEdit);
 
+        $.ajax({
+          url: `/admin/get-user/${userIdToEdit}`,
+          method: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            firstname = response.Data.User['firstname']
+            secondname = response.Data.User['secondname']
+            email = response.Data.User['email']
+            phone = response.Data.User['phone']
+            is_admin = response.Data.User['is_admin']
 
-        $('#edit-user-modal').modal('show');
+            $('#edited-user-id').val(userIdToEdit)
+            $('#user-firstname').val(firstname)
+            $('#user-secondname').val(secondname)
+            $('#user-email').val(email)
+            $('#user-phone').val(phone)
+            $('#user-is_admin').prop("checked", is_admin)
+
+            $('#edit-user-modal').modal('show');
+          }
+        })
+
       });
     })
 </script>

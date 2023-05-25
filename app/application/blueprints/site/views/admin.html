@@ -61,9 +61,12 @@
         <button class="btn btn-success mt-2" data-toggle="modal" data-target="#add-user-modal">Adăugare utilizator nou</button>
 
       {% if added_new_user %}
-      {% include "modals/user-info-modal.html" %}
+      {% include "modals/added-user-info-modal.html" %}
       {% endif %}
 
+      {% if edited_user %}
+      {% include "modals/edited-user-info-modal.html" %}
+      {% endif %}
 
       {% if deleted_user %}
       {% include "modals/deleted-user-info-modal.html" %}
