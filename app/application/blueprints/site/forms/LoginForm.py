@@ -1,9 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, Email, ValidationError
-from flask_login import current_user, login_user
-
-from ....database.models import User
+from wtforms.validators import InputRequired, Length, Email
 
 class LoginForm(FlaskForm):
     email = EmailField(validators=[InputRequired(), Email(), Length(min=4, max=255)], render_kw={"placeholder": "Introduceți adresa de email"})
