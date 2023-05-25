@@ -1,0 +1,102 @@
+{% include 'header.html' %}
+
+  <div class="container mt-4">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#manage-users">Utilizatori</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#manage-footage">Înregistrări<picture>
+          <source media="(min-width: )" srcset="">
+          <img src="" alt="">
+        </picture></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#manage-surveillance-cameras">Camere de supraveghere<picture>
+          <source media="(min-width: )" srcset="">
+          <img src="" alt="">
+        </picture></a>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-4">
+      {% include "admin-tabs/manage-users.html" %}
+      {% include "admin-tabs/manage-footage.html" %}
+      {% include "admin-tabs/manage-surveillance-cameras.html" %}
+  </div>
+  
+</div>
+
+{% include 'footer.html' %}
+
+
+<script>
+  $(document).ready(function() {
+    $('#users-table').DataTable({
+      paging: true,
+      lengthChange: false,
+      pagingType: 'simple',
+      pageLength: 10,
+      language: {
+        url: 'static/datatables/RO_RO.lang'
+      },
+    });
+
+    var footageTable = $('#footage-table').DataTable({
+      paging: true,
+      lengthChange: false,
+      pagingType: 'simple',
+      pageLength: 10,
+      language: {
+        url: 'static/datatables/RO_RO.lang'
+      }
+    });
+
+    var surveillanceCameraTable = $('#surveillance-camera-table').DataTable({
+      paging: true,
+      lengthChange: false,
+      pagingType: 'simple',
+      pageLength: 10,
+      language: {
+        url: 'static/datatables/RO_RO.lang'
+      }
+    });
+
+    $('#footage-table tfoot th').each(function() {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+
+    footageTable.columns().every(function() {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function() {
+        if (that.search() == this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  });
+
+  function editFootage(footageName) {
+    // Code to handle editing the footage
+  }
+
+  function deleteFootage(footageName) {
+    // Code to handle deleting the footage
+  }
+
+  function downloadFootage(footageName) {
+    var link = document.createElement('a');
+    link.href = footageName;
+    link.download = footageName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function openVideoModal(videoSrc) {
+    var videoPlayer = document.getElementById('video-player');
+    videoPlayer.src = videoSrc;
+    $('#video-player-modal').modal('show');
+  }
+</script>

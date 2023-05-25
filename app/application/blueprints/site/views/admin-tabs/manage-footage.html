@@ -1,0 +1,102 @@
+<div class="tab-pane fade" id="manage-footage">
+    <h3>Administrare înregistrări</h3>
+    
+    <div class="table-responsive">
+      <table class="table table-bordered" id="footage-table">
+        <thead style="display: none;">
+          <tr>
+            <th>Footage</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-md-7">
+              <div class="footage-info">
+                <h4 class="footage-title">REG_CAMERA_DE_ZI_3</h4>
+                <p class="footage-date">2023-05-01, 16:30</p>
+              </div>
+            </td>
+            <td class="col-md-6">
+              <div class="actions-list">
+                <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                  <i class="fas fa-eye"></i>
+                  <span>Vizionează</span>
+                </div>
+                <div class="clickable icon-action">
+                  <i class="fas fa-edit"></i>
+                  <span>Editează</span>
+                </div>
+                <div class="clickable icon-action"> 
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Șterge</span>
+                </div>
+                <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                  <i class="fas fa-download"></i>
+                  <span>Descarcă</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-7">
+              <div class="footage-info">
+                <h4 class="footage-title">REG_GRADINA_21</h4>
+                <p class="footage-date">2023-05-03, 19:30</p>
+              </div>
+            </td>
+            <td class="col-md-6">
+              <div class="actions-list">
+                <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                  <i class="fas fa-eye"></i>
+                  <span>Vizionează</span>
+                </div>
+                <div class="clickable icon-action">
+                  <i class="fas fa-edit"></i>
+                  <span>Editează</span>
+                </div>
+                <div class="clickable icon-action"> 
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Șterge</span>
+                </div>
+                <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                  <i class="fas fa-download"></i>
+                  <span>Descarcă</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-7">
+              <div class="footage-info">
+                <h4 class="footage-title">REG_BAIE_1</h4>
+                <p class="footage-date">2023-05-19, 11:22</p>
+              </div>
+            </td>
+            <td class="col-md-6">
+              <div class="actions-list">
+                <div class="clickable icon-action" onclick="openVideoModal('static/moment.mp4')">
+                  <i class="fas fa-eye"></i>
+                  <span>Vizionează</span>
+                </div>
+                <div class="clickable icon-action">
+                  <i class="fas fa-edit"></i>
+                  <span>Editează</span>
+                </div>
+                <div class="clickable icon-action"> 
+                  <i class="fas fa-trash-alt"></i>
+                  <span>Șterge</span>
+                </div>
+                <div class="clickable icon-action" onclick="downloadFootage('static/moment.mp4')">
+                  <i class="fas fa-download"></i>
+                  <span>Descarcă</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    {% include "modals/video-player-modal.html" %}
+</div>

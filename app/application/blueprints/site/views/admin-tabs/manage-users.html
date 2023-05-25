@@ -1,0 +1,57 @@
+<div class="tab-pane fade show active" id="manage-users">
+    <h3>Administrare utilizatori</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered" id="users-table">
+        <thead>
+          <tr>
+            <th>Nume</th>
+            <th>Email</th>
+            <th>Număr de telefon</th>
+            <th>Acțiuni</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          
+          <tr>
+            <td>{{ user.firstname }} {{ user.secondname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>
+              <div class="actions-list">
+                <div class="clickable icon-action">
+                  <i class="fas fa-edit"></i>
+                  <span class="btn-edit-user" data-user-id="{{ user.id }}">Editează</span>
+                </div>
+                <div class="clickable icon-action"> 
+                  <i class="fas fa-trash-alt"></i>
+                  <span class="btn-delete-user" data-user-id="{{ user.id }}">Șterge</span>
+                </div>
+            </div>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-success mt-2" data-toggle="modal" data-target="#add-user-modal">Adăugare utilizator nou</button>
+
+  {% if added_new_user %}
+  {% include "modals/added-user-info-modal.html" %}
+  {% endif %}
+
+  {% if edited_user %}
+  {% include "modals/edited-user-info-modal.html" %}
+  {% endif %}
+
+  {% if deleted_user %}
+  {% include "modals/deleted-user-info-modal.html" %}
+  {% endif %}
+
+  {% include "modals/add-user-modal.html" %}
+  {% include "modals/edit-user-modal.html" %}
+  {% include "modals/delete-user-modal.html" %}
+
+</div>
