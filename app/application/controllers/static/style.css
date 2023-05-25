@@ -1,0 +1,52 @@
+body {
+    zoom: 130%;
+}
+
+#video-player {
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.footage-info {
+    margin-bottom: 10px;
+  }
+  
+  .footage-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .actions-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .icon-action {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  .icon-action i {
+    margin-right: 5px;
+  }
+
+  .clickable.icon-action:hover {
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+
+  .table {
+    zoom: 0.9; /* Adjust the zoom level as needed */
+    width: 100%;
+  }
+
+  #surveillance-camera-table {
+    zoom: 0.8;
+  }

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" class="h-150">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+
+    <title>A-Eye</title>
+
+    <nav class="navbar py-3 navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="static/images/aeye-navbar.png" width=250 alt="A-Eye"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+          {% if current_user.is_authenticated %}
+          <ul class="navbar-nav ml-auto ms-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="/"><i class="fas fa-home me-2">&nbsp;</i>Panou principal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history"><i class="fas fa-file-video me-2">&nbsp;</i>Istoric</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile"><i class="fas fa-user me-2">&nbsp;</i>Profil</a>
+            </li>
+            {% if current_user.is_authenticated and current_user.is_admin %}
+            <li class="nav-item">
+              <a class="nav-link" href="/admin"><i class="fas fa-cogs me-2">&nbsp;</i>Administrare</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-2">&nbsp;</i>Delogare</a>
+            </li>
+          </ul>
+
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </head>
+  <body class="d-flex flex-column h-150">

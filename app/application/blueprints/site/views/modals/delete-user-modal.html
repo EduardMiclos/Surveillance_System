@@ -1,0 +1,40 @@
+<div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="deleteUserModalLabel">Ștergere utilizator</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <form method="POST" action="/admin/delete-user">
+        <input type="hidden" name="user_id" id="deleted-user-id" value="">
+
+        <div class="modal-body">
+          <div class="d-flex flex-column align-items-center mb-3">
+            <i class="fas fa-trash text-danger fa-2x"></i>
+            <strong class="mt-2 h5">Sunteți sigur că doriți să ștergeți utilizatorul?</strong>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+          <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Șterge utilizator</button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+      var userIdToDelete;
+    
+      $('.btn-delete-user').on('click', function() {
+        userIdToDelete = $(this).data('user-id');
+        $("#deleted-user-id").val(userIdToDelete);
+        
+        $('#delete-user-modal').modal('show');
+      });
+    })
+</script>
