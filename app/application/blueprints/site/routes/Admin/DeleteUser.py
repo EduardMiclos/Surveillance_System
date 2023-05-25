@@ -1,5 +1,5 @@
 from flask import redirect, session, request
-
+from flask_login import login_required
 
 from .AdminInterface import AdminInterface
 from .....database import db
@@ -8,6 +8,7 @@ from .....database.models import User
 class DeleteUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/delete-user'
     
+    @login_required
     def post(self):
         user_id = request.form.get("user_id")
         

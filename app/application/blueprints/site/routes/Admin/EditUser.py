@@ -1,4 +1,5 @@
 from flask import redirect, session, request
+from flask_login import login_required
 
 from .AdminInterface import AdminInterface
 from .....database import db
@@ -8,6 +9,7 @@ from .....database.models import User
 class EditUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/edit-user'
     
+    @login_required
     def post(self):
         useredit_form = UserEditForm()
         

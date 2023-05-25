@@ -1,6 +1,6 @@
 # Third party imports
 from flask import render_template, make_response, session
-
+from flask_login import login_required
 
 # Local application imports
 from .AdminInterface import AdminInterface
@@ -12,6 +12,7 @@ from .....database.models import User
 class Admin(AdminInterface):
     base_route = AdminInterface.base_route
     
+    @login_required
     def get(self):
         headers = {'Content-Type': 'text/html'}
        
