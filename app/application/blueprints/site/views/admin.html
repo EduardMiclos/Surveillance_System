@@ -100,3 +100,15 @@
     $('#video-player-modal').modal('show');
   }
 </script>
+
+<script>
+  $(document).ready(function() {
+    if (window.location.hash) {
+      var targetSection = window.location.hash;
+      $('a[href="' + targetSection + '"]').tab('show');
+      $('html, body').animate({
+        scrollTop: $(targetSection).offset().top
+      }, 1000);
+    }
+  });
+</script>

@@ -8,7 +8,7 @@
           </button>
         </div>
         
-        <form method="POST" action="/admin/edit-user">
+        <form method="POST" action="/admin/user/edit">
         <input type="hidden" name="user_id" id="edited-user-id" value="">
 
         <div class="modal-body">
@@ -58,7 +58,7 @@
         $("#edited-user-id").val(userIdToEdit);
 
         $.ajax({
-          url: `/admin/get-user/${userIdToEdit}`,
+          url: `/admin/user/get/${userIdToEdit}`,
           method: 'GET',
           dataType: 'json',
           success: function(response) {

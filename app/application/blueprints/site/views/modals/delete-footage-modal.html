@@ -1,0 +1,40 @@
+<div class="modal fade" id="delete-footage-modal" tabindex="-1" role="dialog" aria-labelledby="deleteFootageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="deleteFootageModalLabel">Ștergere înregistrare</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <form method="POST" action="/admin/footage/delete">
+        <input type="hidden" name="footage_id" id="deleted-footage-id" value="">
+
+        <div class="modal-body">
+          <div class="d-flex flex-column align-items-center mb-3">
+            <i class="fas fa-trash text-danger fa-2x"></i>
+            <strong class="mt-2 h5">Sunteți sigur că doriți să ștergeți această înregistrare?</strong>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+          <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Șterge înregistrare</button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+      var footageIdToDelete;
+    
+      $('.btn-delete-footage').on('click', function() {
+        footageIdToDelete = $(this).data('footage-id');
+        $("#deleted-footage-id").val(footageIdToDelete);
+        
+        $('#delete-footage-modal').modal('show');
+      });
+    })
+</script>

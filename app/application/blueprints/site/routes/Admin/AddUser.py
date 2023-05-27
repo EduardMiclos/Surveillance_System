@@ -8,7 +8,7 @@ from ...forms import RegisterForm
 from .....database.models import User
 
 class AddUser(AdminInterface):
-    base_route = f'{AdminInterface.base_route}/add-user'
+    base_route = f'{AdminInterface.base_route}/user/add'
     
     @login_required
     @admin_required
