@@ -8,26 +8,26 @@
               <th>Status</th>
               <th>Descriere</th>
               <th>Data inițierii</th>
-              <th>Up-time</th>
               <th>Last update</th>
               <th>Acțiuni</th>
             </tr>
           </thead>
           <tbody>
+
+            {% for camera in cameras %}
             <tr>
               <td>
                 <i class="fas fa-video"></i>&nbsp;
-                <b>CAMERA_DE_ZI_1</b>
+                <b>{{ camera.name }}</b>
               </td>
               <td>
-                <span class="font-weight-bold text-success">
-                  ACTIVĂ
+                <span class="font-weight-bold {{ 'text-success' if camera.status.id == 1 else 'text-danger' }}">
+                  {{ camera.status.name }}
                 </span>
               </td>
-              <td>Funcționează în camera de zi.</td>
-              <td>2023-05-01, 16:22</td>
-              <td>18 ore</td>
-              <td>2023-05-01, 16:22</td>
+              <td>{{ camera.description }}</td>
+              <td>{{ camera.last_restart }}</td>
+              <td>{{ camera.last_update }}</td>
               <td class="col-md-1">
                 <div class="actions-list">
                   <div class="clickable icon-action text-success"> 
@@ -45,97 +45,7 @@
               </div>
               </td>
             </tr>
-            <tr>
-              <td>
-                <i class="fas fa-video"></i>&nbsp;
-                <b>CAMERA_DE_ZI_2</b>
-              </td>
-              <td>
-                <span class="font-weight-bold text-info">
-                  SE ACTUALIZEAZĂ
-                </span>
-            </td>
-              <td>Funcționează în camera de zi.</td>
-              <td>2023-05-01, 16:22</td>
-              <td>18 ore</td>
-              <td>2023-05-01, 16:22</td>
-              <td class="col-md-1">
-                <div class="actions-list">
-                  <div class="clickable icon-action text-success"> 
-                    <i class="fa fa-refresh"></i>
-                    <span>Actualizează</span>
-                  </div>
-                  <div class="clickable icon-action">
-                    <i class="fas fa-edit"></i>
-                    <span>Editează</span>
-                  </div>
-                  <div class="clickable icon-action"> 
-                    <i class="fas fa-trash-alt"></i>
-                    <span>Deconectează</span>
-                  </div>
-              </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fas fa-video"></i>&nbsp;
-                <b>GRADINA_1</b>
-              </td>
-              <td>
-                <span class="font-weight-bold text-danger">
-                  OPRITĂ
-                </span>
-              </td>
-              <td>Funcționează în grădină.</td>
-              <td>2023-05-01, 16:22</td>
-              <td>18 ore</td>
-              <td>2023-05-01, 16:22</td>
-              <td class="col-md-1">
-                <div class="actions-list">
-                  <div class="clickable icon-action text-success"> 
-                    <i class="fa fa-refresh"></i>
-                    <span>Actualizează</span>
-                  </div>
-                  <div class="clickable icon-action">
-                    <i class="fas fa-edit"></i>
-                    <span>Editează</span>
-                  </div>
-                  <div class="clickable icon-action"> 
-                    <i class="fas fa-trash-alt"></i>
-                    <span>Deconectează</span>
-                  </div>
-              </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fas fa-video"></i>&nbsp;
-                <b>BUCATARIE_1</b>
-              </td>
-              <td>
-                <span class="font-weight-bold text-success">ACTIVĂ</span>
-              </td>
-              <td>Funcționează în bucătărie.</td>
-              <td>2023-05-01, 16:22</td>
-              <td>18 ore</td>
-              <td>2023-05-01, 16:22</td>
-              <td class="col-md-1">
-                <div class="actions-list">
-                  <div class="clickable icon-action text-success"> 
-                    <i class="fa fa-refresh"></i>
-                    <span>Actualizează</span>
-                  </div>
-                  <div class="clickable icon-action">
-                    <i class="fas fa-edit"></i>
-                    <span>Editează</span>
-                  </div>
-                  <div class="clickable icon-action"> 
-                    <i class="fas fa-trash-alt"></i>
-                    <span>Deconectează</span>
-                  </div>
-              </div>
-              </td>
-            </tr>
+            {% endfor %} 
           </tbody>
         </table>
       </div>
