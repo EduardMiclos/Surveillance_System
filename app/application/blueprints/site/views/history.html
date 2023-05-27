@@ -2,6 +2,7 @@
 
 <div class="container mt-4">
   <h3>Istoric înregistrări</h3>
+  <p>Această secțiune prezintă o listă de înregistrări anterioare, disponibile pentru vizualizare și descărcare.</p>
 
   <div class="table-responsive">
     <table class="table table-bordered" id="footage-table">
@@ -22,9 +23,9 @@
           </td>
           <td class="col-md-4">
             <div class="actions-list">
-              <div class="clickable icon-action" onclick="openVideoModal('/api/get/footage/{{ footage.camera.footages_path }}/{{ footage.path }}')">
+              <div class="clickable icon-action" onclick="setVideoSource('/api/get/footage/{{ footage.camera.footages_path }}/{{ footage.path }}')">
                 <i class="fas fa-eye"></i>
-                <span>Vizionează</span>
+                <span class="btn-view-footage" data-footage-id="{{ footage.id }}">Vizionează</span>
               </div>
               <div class="clickable icon-action" onclick="downloadFootage('/api/get/footage/{{ footage.camera.footages_path }}/{{ footage.path }}')">
                 <i class="fas fa-download"></i>
