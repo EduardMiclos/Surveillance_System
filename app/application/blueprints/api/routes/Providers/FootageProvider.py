@@ -8,7 +8,7 @@ from datetime import datetime
 from flask import send_file
 
 # Local application imports
-from .config import FOOTAGE_PATH
+from ..config import FOOTAGE_PATH
 from .FootageProviderInterface import FootageProviderInterface
 
 class FootageProvider(FootageProviderInterface):

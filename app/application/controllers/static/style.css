@@ -50,3 +50,44 @@ body {
   #surveillance-camera-table {
     zoom: 0.8;
   }
+
+  .video-player-container {
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .modal-header {
+    border-bottom: none;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  .modal-footer .btn-primary {
+    margin-left: auto;
+  }
+  
+  #download-button {
+    margin-left: 10px;
+  }
+  
+  #videoPlayerModalLabel {
+    display: flex;
+    align-items: center;
+  }
+  
+  #videoPlayerModalLabel i {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+  
+  #viewed-footage-name {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  #viewed-footage-date {
+    color: #6c757d;
+  }

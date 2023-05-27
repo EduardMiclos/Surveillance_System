@@ -1,7 +1,6 @@
-function openVideoModal(videoSrc) {
+function setVideoSource(videoSrc) {
     var videoPlayer = document.getElementById('video-player');
     videoPlayer.src = videoSrc;
-    $('#video-player-modal').modal('show');
 }
 
 function downloadFootage(footageName) {
