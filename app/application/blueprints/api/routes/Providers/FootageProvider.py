@@ -17,4 +17,4 @@ class FootageProvider(FootageProviderInterface):
     def get(self, camera_name, file_name):
         print(FOOTAGE_PATH)
         file_path = f'{FOOTAGE_PATH}/{camera_name}/{file_name}'
-        return send_file(file_path)        
+        return send_file(file_path)

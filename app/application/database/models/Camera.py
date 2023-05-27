@@ -9,8 +9,8 @@ class Camera(db.Model):
     status_id = db.Column(db.Integer, db.ForeignKey('camera_status.id'), nullable=False)
     status = db.relationship('CameraStatus', lazy=True)
     description = db.Column(db.String(500), nullable=True)
-    last_restart = db.Column(db.Date, nullable=False, default=func.current_date())
-    last_update = db.Column(db.Date, nullable=True)
+    last_restart = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
+    last_update = db.Column(db.DateTime, nullable=True)
     footages_path = db.Column(db.String(255), unique=True, nullable=False)
     temp_path = db.Column(db.String(255), unique=True, nullable=False)
     
