@@ -6,7 +6,7 @@ from .....database import db
 from .....database.models import User
 
 class DeleteUser(AdminInterface):
-    base_route = f'{AdminInterface.base_route}/delete-user'
+    base_route = f'{AdminInterface.base_route}/user/delete'
     
     @login_required
     @admin_required

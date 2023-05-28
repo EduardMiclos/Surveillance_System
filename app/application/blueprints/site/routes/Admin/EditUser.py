@@ -7,7 +7,7 @@ from ...forms import UserEditForm
 from .....database.models import User
 
 class EditUser(AdminInterface):
-    base_route = f'{AdminInterface.base_route}/edit-user'
+    base_route = f'{AdminInterface.base_route}/user/edit'
     
     @login_required
     @admin_required

@@ -27,8 +27,14 @@ for resource_class in Informers.InformerInterface.__subclasses__():
     
 """
 Providers
+"""    
+for resource_class in Providers.FootageProviderInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
+    
 """
-for resource_class in Providers.ProviderInterface.__subclasses__():
+Utils Providers
+"""
+for resource_class in UtilsProviders.ProviderInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
 
 
