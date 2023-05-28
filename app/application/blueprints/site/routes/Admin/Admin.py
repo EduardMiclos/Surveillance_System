@@ -1,5 +1,5 @@
 # Third party imports
-from flask import render_template, make_response, session, redirect, abort
+from flask import render_template, make_response, session
 from flask_login import login_required, current_user
 
 # Local application imports
@@ -21,7 +21,7 @@ class Admin(AdminInterface):
         useredit_form = UserEditForm()
         users = User.query.all()
         cameras = Camera.query.all()
-        footages = Footage.query.all()
+        footages = Footage.query.filter(Footage.date >= current_user.register_date).all()
         
         added_new_user = session.pop('added_new_user', default=False)
         edited_user = session.pop('edited_user', default=False)

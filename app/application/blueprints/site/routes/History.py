@@ -1,6 +1,6 @@
 # Third party imports
 from flask import render_template, make_response
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 # Local application imports
 from .ViewerInterface import ViewerInterface
@@ -12,7 +12,7 @@ class History(ViewerInterface):
     @login_required
     def get(self):
         headers = {'Content-Type': 'text/html'}
-        footages = Footage.query.all()
+        footages = Footage.query.filter(Footage.date >= current_user.register_date).all()
         
         return make_response(
             render_template('history.html', 
