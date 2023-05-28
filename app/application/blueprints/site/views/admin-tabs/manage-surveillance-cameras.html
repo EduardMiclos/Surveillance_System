@@ -16,7 +16,7 @@
 
             {% for camera in cameras %}
             <tr>
-              <td>
+              <td class="col-md-2">
                 <i class="fas fa-video"></i>&nbsp;
                 <b>{{ camera.name }}</b>
               </td>
@@ -36,11 +36,11 @@
                   </div>
                   <div class="clickable icon-action">
                     <i class="fas fa-edit"></i>
-                  <span>Editează</span>
+                  <span class="btn-edit-camera" data-camera-id="{{ camera.id }}">Editează</span>
                   </div>
                   <div class="clickable icon-action"> 
                     <i class="fas fa-trash-alt"></i>
-                    <span>Deconectează</span>
+                    <span>Înlăturare</span>
                   </div>
               </div>
               </td>
@@ -63,7 +63,6 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- Form fields for adding a new user -->
               <form>
                 <div class="form-group">
                   <label for="name">Nume</label>
@@ -87,4 +86,10 @@
           </div>
         </div>
       </div>
+
+      {% if edited_camera %}
+      {% include "modals/edited-camera-info-modal.html" %}
+      {% endif %}
+
+      {% include "modals/edit-camera-modal.html" %}
     </div>

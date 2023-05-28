@@ -9,7 +9,7 @@ class Footage(db.Model, UserMixin):
     name = db.Column(db.String(255), unique=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
     path = db.Column(db.String(255), unique=True, nullable=False)
-    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=False)
+    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=True)
     camera = db.relationship('Camera', backref='footage', lazy=True)
     
     __table_args__ = (
