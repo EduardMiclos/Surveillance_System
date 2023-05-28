@@ -21,7 +21,7 @@ class DeleteFootage(AdminInterface):
         path = f'{FOOTAGE_PATH}/{footage.camera.footages_path}/{footage.path}'
         
         if os.path.exists(path):
-            os.remove(f'{FOOTAGE_PATH}/{footage.camera.footages_path}/{footage.path}')
+            os.remove(path)
         
         footage_query.delete()
         db.session.commit()

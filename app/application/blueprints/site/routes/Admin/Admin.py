@@ -27,7 +27,7 @@ class Admin(AdminInterface):
         edited_user = session.pop('edited_user', default=False)
         deleted_user = session.pop('deleted_user', default=False)
         deleted_footage = session.pop('deleted_footage', default=False)
-        
+        deleted_camera = session.pop('deleted_camera', default=False)
         edited_camera = session.pop('edited_camera', default=False)
         pwd = session.pop('pwd', default=None)
         
@@ -40,6 +40,7 @@ class Admin(AdminInterface):
                             edited_user = edited_user,
                             deleted_user = deleted_user,
                             deleted_footage = deleted_footage,
+                            deleted_camera = deleted_camera,
                             users = users,
                             cameras = cameras,
                             footages = footages,

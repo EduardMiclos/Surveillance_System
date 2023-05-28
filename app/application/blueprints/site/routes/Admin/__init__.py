@@ -3,6 +3,7 @@ from .Admin import Admin
 from .AddUser import AddUser
 from .EditUser import EditUser
 from .DeleteUser import DeleteUser
+from .DeleteCamera import DeleteCamera
 from .DeleteFootage import DeleteFootage
 from .EditCamera import EditCamera
 from .GetCamera import GetCamera

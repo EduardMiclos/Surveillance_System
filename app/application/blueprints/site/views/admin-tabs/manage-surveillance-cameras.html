@@ -10,7 +10,7 @@
           <th>Descriere</th>
           <th>Data inițierii</th>
           <th>Last update</th>
-          <th>Acțiuni</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -30,7 +30,7 @@
               {{ camera.status.name }}
             </span>
           </td>
-          <td>{{ camera.description }}</td>
+          <td class="col-md-2">{{ camera.description }}</td>
           <td>{{ camera.last_restart }}</td>
           <td>{{ camera.last_update }}</td>
           <td class="col-md-1">
@@ -45,7 +45,7 @@
               </div>
               <div class="clickable icon-action">
                 <i class="fas fa-trash-alt"></i>
-                <span>Înlăturare</span>
+                <span class="btn-delete-camera" data-camera-id="{{ camera.id }}">Înlăturare</span>
               </div>
             </div>
           </td>
@@ -96,5 +96,10 @@
       {% include "modals/edited-camera-info-modal.html" %}
       {% endif %}
 
+      {% if deleted_camera %}
+      {% include "modals/deleted-camera-info-modal.html" %}
+      {% endif %}
+
       {% include "modals/edit-camera-modal.html" %}
+      {% include "modals/delete-camera-modal.html" %}
     </div>
