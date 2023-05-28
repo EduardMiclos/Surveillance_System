@@ -91,3 +91,12 @@ body {
   #viewed-footage-date {
     color: #6c757d;
   }
+
+  .power-btn {
+    color: #000000;
+  }
+
+  .power-btn:hover {
+    color: #ffffff;
+    background-color: #000000;
+  }
