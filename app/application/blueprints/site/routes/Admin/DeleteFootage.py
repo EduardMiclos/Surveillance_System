@@ -27,4 +27,4 @@ class DeleteFootage(AdminInterface):
         db.session.commit()
         
         session['deleted_footage'] = True
-        return redirect('/admin#manage-footage')
+        return redirect('/admin/manage-footage')

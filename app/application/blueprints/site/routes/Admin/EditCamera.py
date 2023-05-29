@@ -28,9 +28,9 @@ class EditCamera(AdminInterface):
             cameraedit_form.process()
 
             session['edited_camera'] = True
-            return redirect('/admin#manage-surveillance-cameras')
+            return redirect('/admin/manage-surveillance-cameras')
         else:
             cameraedit_form.process()
     
             session['edited_camera'] = False
-            return redirect('/admin#manage-surveillance-cameras')
+            return redirect('/admin/manage-surveillance-cameras')

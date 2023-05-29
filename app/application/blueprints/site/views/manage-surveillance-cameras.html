@@ -3,16 +3,16 @@
   <div class="container mt-4">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" href="/admin">Utilizatori</a>
+        <a class="nav-link" href="/admin">Utilizatori</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"href="/admin/manage-footage">Înregistrări<picture>
+        <a class="nav-link" href="/admin/manage-footage">Înregistrări<picture>
           <source media="(min-width: )" srcset="">
           <img src="" alt="">
         </picture></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin/manage-surveillance-cameras">Camere de supraveghere<picture>
+        <a class="nav-link active" href="/admin/manage-surveillance-cameras">Camere de supraveghere<picture>
           <source media="(min-width: )" srcset="">
           <img src="" alt="">
         </picture></a>
@@ -20,7 +20,7 @@
     </ul>
 
     <div class="tab-content mt-4">
-      {% include "admin-tabs/manage-users-tab.html" %}
+      {% include "admin-tabs/manage-surveillance-cameras-tab.html" %}
   </div>
   
 </div>
@@ -28,4 +28,5 @@
 {% include 'footer.html' %}
 
 <script src="/static/js/utils.js"></script>
-<script src="/static/js/manage-users.js"></script>
+<script src="/static/js/admin/manage-surveillance-cameras.js"></script>
+<script src="/static/js/SSEs/camera_handling.js"></script>

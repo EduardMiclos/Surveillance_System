@@ -1,5 +1,7 @@
 from .AdminInterface import AdminInterface
 from .Admin import Admin
+from .ManageFootage import ManageFootage
+from .ManageSurveillanceCameras import ManageSurveillanceCameras
 from .AddUser import AddUser
 from .EditUser import EditUser
 from .DeleteUser import DeleteUser

@@ -38,4 +38,4 @@ class DeleteCamera(AdminInterface):
         db.session.commit()
         
         session['deleted_camera'] = True
-        return redirect('/admin#manage-surveillance-cameras')
+        return redirect('/admin/manage-surveillance-cameras')

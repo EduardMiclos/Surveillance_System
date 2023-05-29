@@ -4,6 +4,7 @@ from flask_sse import sse
 from flask_jwt_extended import JWTManager
 from redis import StrictRedis, exceptions
 
+
 if __name__ == 'app':
     from application.controllers.Application import Application
     from application.blueprints.api import api_bp
