@@ -39,6 +39,13 @@ Initializing the database.
 """
 db.init_app(app)
 
+
+@app.route('/send')
+def send_message():
+    sse.publish({"message": "Hello!"}, type='greeting')
+    return "Message sent!"
+
+
 """
 Initializing the database migration engine.
 """
