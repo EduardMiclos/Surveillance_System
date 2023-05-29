@@ -1,8 +1,8 @@
 from flask_login import login_required
 
-from ....api.controllers.Response import Response
-from .AdminInterface import AdminInterface, admin_required
-from .....database.models import User
+from .....api.controllers.Response import Response
+from ..AdminInterface import AdminInterface, admin_required
+from ......database.models import User
 
 class GetUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/user/get/<int:user_id>'

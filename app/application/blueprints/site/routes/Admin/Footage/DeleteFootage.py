@@ -3,10 +3,10 @@ import os
 from flask import redirect, session, request
 from flask_login import login_required
 
-from .config import FOOTAGE_PATH
-from .AdminInterface import AdminInterface, admin_required
-from .....database import db
-from .....database.models import Footage
+from ..config import FOOTAGE_PATH
+from ..AdminInterface import AdminInterface, admin_required
+from ......database import db
+from ......database.models import Footage
 
 class DeleteFootage(AdminInterface):
     base_route = f'{AdminInterface.base_route}/footage/delete'

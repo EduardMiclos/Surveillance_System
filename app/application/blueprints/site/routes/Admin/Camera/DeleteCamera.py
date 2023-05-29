@@ -4,10 +4,10 @@ import shutil
 from flask import redirect, session, request
 from flask_login import login_required
 
-from .config import FOOTAGE_PATH
-from .AdminInterface import AdminInterface, admin_required
-from .....database import db
-from .....database.models import Footage, Camera
+from ..config import FOOTAGE_PATH
+from ..AdminInterface import AdminInterface, admin_required
+from ......database import db
+from ......database.models import Footage, Camera
 
 class DeleteCamera(AdminInterface):
     base_route = f'{AdminInterface.base_route}/camera/delete'

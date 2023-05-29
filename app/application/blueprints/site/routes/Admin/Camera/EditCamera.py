@@ -1,10 +1,10 @@
 from flask import redirect, session, request
 from flask_login import login_required
 
-from .AdminInterface import AdminInterface, admin_required
-from .....database import db
-from ...forms import CameraEditForm
-from .....database.models import Camera
+from ..AdminInterface import AdminInterface, admin_required
+from ......database import db
+from ....forms import CameraEditForm
+from ......database.models import Camera
 
 class EditCamera(AdminInterface):
     base_route = f'{AdminInterface.base_route}/camera/edit'

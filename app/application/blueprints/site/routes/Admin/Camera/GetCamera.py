@@ -1,8 +1,8 @@
 from flask_login import login_required
 
-from ....api.controllers.Response import Response
-from .AdminInterface import AdminInterface, admin_required
-from .....database.models import Camera
+from .....api.controllers.Response import Response
+from ..AdminInterface import AdminInterface, admin_required
+from ......database.models import Camera
 
 class GetCamera(AdminInterface):
     base_route = f'{AdminInterface.base_route}/camera/get/<int:camera_id>'

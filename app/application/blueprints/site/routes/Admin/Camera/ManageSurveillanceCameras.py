@@ -3,10 +3,10 @@ from flask import render_template, make_response, session
 from flask_login import login_required, current_user
 
 # Local application imports
-from .AdminInterface import AdminInterface, admin_required
-from ...forms import CameraEditForm
+from ..AdminInterface import AdminInterface, admin_required
+from ....forms import CameraEditForm
 
-from .....database.models import Camera
+from ......database.models import Camera
 
 class ManageSurveillanceCameras(AdminInterface):
     base_route = f'{AdminInterface.base_route}/manage-surveillance-cameras'

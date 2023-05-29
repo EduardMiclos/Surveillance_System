@@ -3,9 +3,9 @@ from flask import render_template, make_response, session
 from flask_login import login_required, current_user
 
 # Local application imports
-from .AdminInterface import AdminInterface, admin_required
+from ..AdminInterface import AdminInterface, admin_required
 
-from .....database.models import Footage
+from ......database.models import Footage
 
 class ManageFootage(AdminInterface):
     base_route = f'{AdminInterface.base_route}/manage-footage'

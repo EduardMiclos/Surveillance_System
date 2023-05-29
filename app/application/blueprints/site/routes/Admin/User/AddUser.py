@@ -2,10 +2,10 @@ from flask import redirect, session
 from flask_login import login_required
 from password_generator import PasswordGenerator
 
-from .AdminInterface import AdminInterface, admin_required
-from .....database import db
-from ...forms import RegisterForm
-from .....database.models import User
+from ..AdminInterface import AdminInterface, admin_required
+from ......database import db
+from ....forms import RegisterForm
+from ......database.models import User
 
 class AddUser(AdminInterface):
     base_route = f'{AdminInterface.base_route}/user/add'
