@@ -34,11 +34,6 @@ app = application.create_app(blueprints = [api_bp, site_bp, sse], config_object 
 if __name__ == 'app.app':
     application.kill_port()
 
-@app.route('/msgme')
-def send_message():
-    sse.publish({"message": "Hello!"}, type='greeting')
-    return "Message sent!"
-
 """
 Initializing the database.
 """
