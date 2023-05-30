@@ -18,7 +18,7 @@ class AddUser(AdminInterface):
         if register_form.validate_on_submit():
             password_generator = PasswordGenerator()
             password_generator.minlen = 10
-            password_generator.maxlen = 10
+            password_generator.maxlen = 15
             
             new_user = User(email = register_form.email.data,
                         firstname = register_form.firstname.data,

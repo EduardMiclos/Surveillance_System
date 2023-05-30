@@ -2,12 +2,10 @@
 from flask import render_template, make_response
 from flask_login import login_required
 
-# Local application imports
-from .ViewerInterface import ViewerInterface
+from .ProfileInterface import ProfileInterface
 
-
-class Profile(ViewerInterface):
-    base_route = f'{ViewerInterface.base_route}/profile'
+class Profile(ProfileInterface):
+    base_route = ProfileInterface.base_route
     
     @login_required
     def get(self):
@@ -16,4 +14,4 @@ class Profile(ViewerInterface):
         return make_response(
             render_template('profile.html'), 
             200, headers
-            )
+        )

@@ -17,17 +17,12 @@ api = Api(site_bp)
 """
 Adding all the necessary resources to the blueprint's api.
 """
-
-"""
-GET resources.
-"""
-
 for resource_class in ViewerInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
 
 for resource_class in AdminInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
 
-"""
-POST resources.
-"""
+for resource_class in ProfileInterface.__subclasses__():
+    print(resource_class.base_route)
+    api.add_resource(resource_class, resource_class.base_route)
