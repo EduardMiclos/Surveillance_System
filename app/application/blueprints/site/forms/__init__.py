@@ -3,3 +3,4 @@ from .UserEditForm import UserEditForm
 from .CameraEditForm import CameraEditForm
 from .LoginForm import LoginForm
 from .ChangePasswordForm import ChangePasswordForm
+from .ChangePersonalInfoForm import ChangePersonalInfoForm
