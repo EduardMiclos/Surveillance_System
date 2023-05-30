@@ -1,22 +1,22 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
 
 from ....database.models import *
 
 class ChangePasswordForm(FlaskForm):
-    old_password = StringField(validators=[InputRequired(), Length(min=5, max=20)], 
+    old_password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], 
                                         render_kw={
                                             "placeholder": "Introduceți vechea parolă",
                                             "id": "old_pwd"
                                             })
-    new_password = StringField(validators=[InputRequired(), Length(min=5, max=20)], 
+    new_password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], 
                                          render_kw={
                                              "placeholder": "Introduceți noua parolă",
                                              "id": "new_pwd"
                                             })
     
-    repeat_password = StringField(validators=[InputRequired(), Length(min=2, max=20)], 
+    repeat_password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], 
                                          render_kw={
                                              "placeholder": "Rescrieți noua parolă",
                                              "id": "repeat_new_pwd"
