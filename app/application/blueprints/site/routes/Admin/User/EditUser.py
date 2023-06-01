@@ -23,6 +23,7 @@ class EditUser(AdminInterface):
             user.secondname = useredit_form.secondname.data
             user.email = useredit_form.email.data
             user.phone = useredit_form.phone.data
+            user.is_admin = useredit_form.is_admin.data
             
             db.session.add(user)
             db.session.commit()

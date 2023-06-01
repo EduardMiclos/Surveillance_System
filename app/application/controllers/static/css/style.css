@@ -61,6 +61,19 @@ body {
     border-bottom: none;
   }
   
+  #update-modal-body {
+    padding: 20px;
+  }
+
+  .update-modal-row {
+    margin-bottom: 10px;
+  }
+
+  .update-modal-row .icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  
   .modal-footer {
     border-top: none;
   }

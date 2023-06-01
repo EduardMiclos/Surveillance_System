@@ -35,9 +35,9 @@
           <td>{{ camera.last_update }}</td>
           <td class="col-md-1">
             <div class="actions-list">
-              <div class="clickable icon-action text-success">
+              <div class="clickable icon-action text-info">
                 <i class="fa fa-refresh"></i>
-                <span>Actualizează</span>
+                <span class="btn-update-camera" data-camera-id="{{ camera.id }}">Actualizează</span>
               </div>
               <div class="clickable icon-action">
                 <i class="fas fa-edit"></i>
@@ -64,5 +64,6 @@
       {% endif %}
 
       {% include "modals/edit-camera-modal.html" %}
+      {% include "modals/update-camera-modal.html" %}
       {% include "modals/delete-camera-modal.html" %}
     </div>
