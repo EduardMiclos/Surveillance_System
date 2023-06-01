@@ -16,6 +16,7 @@ class Camera(db.Model):
     last_update = db.Column(db.DateTime, nullable=True)
     footages_path = db.Column(db.String(255), unique=True, nullable=False)
     temp_path = db.Column(db.String(255), unique=True, nullable=False)
+    preprocess_data = db.Column(db.Boolean(), nullable=True, default=False)
     
     __table_args__ = (
         CheckConstraint("name != ''", name='non_empty_name_check'),

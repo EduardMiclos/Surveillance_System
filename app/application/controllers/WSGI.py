@@ -1,6 +1,7 @@
 import subprocess
 from time import sleep
 import os
+from math import ceil, floor
 
 PORT_KILL_SLEEP_TIME_SEC = 3
 
@@ -49,17 +50,15 @@ class WSGI:
             """
             Suggested number of workers: 2*CPU + 1
             """
-            workers = 2*os.cpu_count() + 1
-            
+            workers= 2*os.cpu_count() + 1
             
             subprocess.run(['gunicorn', 
                             f'{self.app_module}:{self.application_instance}', 
                             '--bind',
                             f'0.0.0.0:{self.port}',
                             f'--workers={workers}',
-                            # added a number of threads > 1 such
-                            # that the workers don't timeout in case of SSEs.
-                            f'--threads=2'], check = True)
+                            '--worker-class=gevent',
+                            '--worker-connections=1000'], check = True)
             
         except subprocess.CalledProcessError as err:
             print(f'ERROR: Occured when trying to initialize a gateway interface.\nError code: {err.returncode}\nError output: {err.output}')
