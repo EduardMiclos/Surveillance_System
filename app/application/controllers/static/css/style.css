@@ -1,0 +1,102 @@
+body {
+    zoom: 130%;
+}
+
+#video-player {
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.footage-info {
+    margin-bottom: 10px;
+  }
+  
+  .footage-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .actions-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .icon-action {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  .icon-action i {
+    margin-right: 5px;
+  }
+
+  .clickable.icon-action:hover {
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+
+  .table {
+    zoom: 0.9; /* Adjust the zoom level as needed */
+    width: 100%;
+  }
+
+  #surveillance-camera-table {
+    zoom: 0.8;
+  }
+
+  .video-player-container {
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .modal-header {
+    border-bottom: none;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  .modal-footer .btn-primary {
+    margin-left: auto;
+  }
+  
+  #download-button {
+    margin-left: 10px;
+  }
+  
+  #videoPlayerModalLabel {
+    display: flex;
+    align-items: center;
+  }
+  
+  #videoPlayerModalLabel i {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+  
+  #viewed-footage-name {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  #viewed-footage-date {
+    color: #6c757d;
+  }
+
+  .power-btn {
+    color: #000000;
+  }
+
+  .power-btn:hover {
+    color: #ffffff;
+    background-color: #000000;
+  }

@@ -1,0 +1,31 @@
+{% include 'header.html' %}
+
+  <div class="container mt-4">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Utilizatori</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/admin/manage-footage">Înregistrări<picture>
+          <source media="(min-width: )" srcset="">
+          <img src="" alt="">
+        </picture></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/manage-surveillance-cameras">Camere de supraveghere<picture>
+          <source media="(min-width: )" srcset="">
+          <img src="" alt="">
+        </picture></a>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-4">
+      {% include "admin-tabs/manage-footage-tab.html" %}
+    </div>
+  
+</div>
+
+{% include 'footer.html' %}
+
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/admin/manage-footage.js"></script>

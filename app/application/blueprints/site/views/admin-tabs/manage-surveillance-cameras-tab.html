@@ -1,0 +1,68 @@
+<div class="container" id="manage-surveillance-cameras">
+  <h3>Administrare camere de supraveghere</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered" id="surveillance-camera-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Denumire</th>
+          <th>Status</th>
+          <th>Descriere</th>
+          <th>Data inițierii</th>
+          <th>Last update</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for camera in cameras %}
+        <tr>
+          <td style="width: 5%;">
+            <button class="btn btn-link btn-sm btn-toggle-camera power-btn" data-camera-id="{{ camera.id }}">
+              <i class="fas fa-power-off fa-lg"></i>
+            </button>
+          </td>
+          <td class="col-md-2">
+            <i class="fas fa-video"></i>&nbsp;
+            <b>{{ camera.name }}</b>
+          </td>
+          <td>
+            <span class="font-weight-bold {{ 'text-success' if camera.status.id == 1 else 'text-danger' }}">
+              {{ camera.status.name }}
+            </span>
+          </td>
+          <td class="col-md-2">{{ camera.description }}</td>
+          <td>{{ camera.last_restart }}</td>
+          <td>{{ camera.last_update }}</td>
+          <td class="col-md-1">
+            <div class="actions-list">
+              <div class="clickable icon-action text-success">
+                <i class="fa fa-refresh"></i>
+                <span>Actualizează</span>
+              </div>
+              <div class="clickable icon-action">
+                <i class="fas fa-edit"></i>
+                <span class="btn-edit-camera" data-camera-id="{{ camera.id }}">Editează</span>
+              </div>
+              <div class="clickable icon-action">
+                <i class="fas fa-trash-alt"></i>
+                <span class="btn-delete-camera" data-camera-id="{{ camera.id }}">Înlăturare</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+      {% if edited_camera %}
+      {% include "modals/edited-camera-info-modal.html" %}
+      {% endif %}
+
+      {% if deleted_camera %}
+      {% include "modals/deleted-camera-info-modal.html" %}
+      {% endif %}
+
+      {% include "modals/edit-camera-modal.html" %}
+      {% include "modals/delete-camera-modal.html" %}
+    </div>

@@ -3,6 +3,7 @@ from time import sleep
 
 from flask import Flask
 from flask_restful import Api, Resource
+from werkzeug.middleware.profiler import ProfilerMiddleware
 
 PORT_KILL_SLEEP_TIME_SEC = 3
 
@@ -23,12 +24,18 @@ class Application:
     def __init__(self, port: str = "8080"):
         self.port = port
     
-    def create_app(self, blueprints: object, config_object: object):
+    def create_app(self, blueprints: object, config_object: object, profiling: bool = False):
         """
         Creating the Flask application.
         """
         self.app = Flask(__name__, instance_relative_config = True)
         
+        if profiling:
+            """
+            Initializing the Profiler.
+            """
+            self.app.wsgi_app = ProfilerMiddleware(self.app.wsgi_app, profile_dir='/home/miclosedi/Surveillance_System/profile_dir')
+            
         """
         Setting up the configuration for the Flask application.
         """

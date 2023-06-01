@@ -1,0 +1,60 @@
+<div class="modal fade" id="edit-camera-modal" tabindex="-1" role="dialog" aria-labelledby="editCameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="editCameraModalLabel">Editare informații cameră de supraveghere</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <form method="POST" action="/admin/camera/edit">
+        <input type="hidden" name="camera_id" id="edited-camera-id" value="">
+
+        <div class="modal-body">
+            {{ cameraedit_form.hidden_tag() }}
+            <div class="form-group">
+              <label for="name">Denumire</label>
+              {{ cameraedit_form.name(class="form-control", id="camera-name") }}
+            </div>
+            
+            <div class="form-group">
+              <label for="description">Descriere</label>
+              {{ cameraedit_form.description(class="form-control", id="camera-description")}}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+          <button type="submit" class="btn btn-primary" id="confirm-camera-edit-btn">Salvează</button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+      var cameraIdToEdit;
+    
+      $('.btn-edit-camera').on('click', function() {
+        cameraIdToEdit = $(this).data('camera-id');
+        $("#edited-camera-id").val(cameraIdToEdit);
+
+        $.ajax({
+          url: `/admin/camera/get/${cameraIdToEdit}`,
+          method: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            name = response.Data.Camera['name']
+            description = response.Data.Camera['description']
+
+            $('#camera-name').val(name)
+            $('#camera-description').val(description)
+
+            $('#edit-camera-modal').modal('show');
+          }
+        })
+
+      });
+    })
+</script>
