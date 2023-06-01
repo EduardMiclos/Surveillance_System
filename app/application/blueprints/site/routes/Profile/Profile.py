@@ -8,7 +8,7 @@ from .ProfileInterface import ProfileInterface
 from ...forms import ChangePersonalInfoForm
 from .....database import db
 from .....database.models import User
-from app.application.controllers.cache import cache
+from .....controllers.cache import cache
 
 class Profile(ProfileInterface):
     base_route = ProfileInterface.base_route

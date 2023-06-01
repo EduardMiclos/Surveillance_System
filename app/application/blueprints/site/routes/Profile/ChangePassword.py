@@ -2,7 +2,7 @@
 from flask import render_template, make_response, flash, redirect
 from flask_login import login_required, current_user
 
-from app.application.controllers.cache import cache
+from .....controllers.cache import cache
 from .ProfileInterface import ProfileInterface
 from ...forms import ChangePasswordForm
 from .....database import db

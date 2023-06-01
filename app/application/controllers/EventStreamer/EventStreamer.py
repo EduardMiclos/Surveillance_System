@@ -7,9 +7,8 @@ class EventStreamer:
     
     def stream(self):
         sse.publish(
-            data = self.data, 
+            {
+                "message": self.event_type,
+                "data": self.data
+            },
             type = self.event_type)
-        
-    
-    
-    

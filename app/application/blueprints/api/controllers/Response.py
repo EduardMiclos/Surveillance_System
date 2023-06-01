@@ -48,3 +48,7 @@ class Response:
         self.set_code(404)
         self.set_status("Not found")
         
+    def set_forbidden(self):
+        self.set_code(403)
+        self.set_status("Access denied!")
+        

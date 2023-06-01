@@ -24,11 +24,12 @@ class Camera(db.Model):
         CheckConstraint("temp_path != ''", name='non_empty_temp_path_check')
     )
     
-    def __init__(self, name, status_id=0, description=None, footages_path=None, temp_path=None):
+    def __init__(self, name, status_id=0, description=None, footages_path=None, temp_path=None, preprocess_data=None):
         self.name = name
         self.status_id = status_id
         self.description = description
-
+        self.preprocess_data = preprocess_data
+        
         if footages_path is not None:
             self.footages_path = footages_path
         else:
