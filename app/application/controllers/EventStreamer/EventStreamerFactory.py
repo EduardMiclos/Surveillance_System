@@ -5,6 +5,7 @@ class EventStreamerFactory:
     event_mapping = {
             EventType.HW_DATA_TRANSMISSION_ALTER: {"type": 'HW_DATA_TRANSMISSION_ALTER'},
             EventType.RASP_UPDATE: {"type": 'RASP_UPDATE'},
+            EventType.RASP_EDIT: {"type": 'RASP_EDIT'},
             EventType.RASP_REMOVE: {"type": 'RASP_REMOVE'},
             EventType.MANAGE_USER_REFRESH: {"type": 'USER_REFRESH'},
             EventType.MANAGE_FOOTAGES_REFRESH: {"type": 'FOOTAGES_REFRESH'},
