@@ -1,7 +1,6 @@
 # Third party imports
 from flask import render_template, make_response, flash, redirect
 from flask_login import login_required, current_user
-import phonenumbers
 from sqlalchemy import and_
 
 
@@ -9,11 +8,13 @@ from .ProfileInterface import ProfileInterface
 from ...forms import ChangePersonalInfoForm
 from .....database import db
 from .....database.models import User
+from app.application.controllers.cache import cache
 
 class Profile(ProfileInterface):
     base_route = ProfileInterface.base_route
     
     @login_required
+    @cache.cached(timeout = None)
     def get(self):
         headers = {'Content-Type': 'text/html'}
         change_personal_info_form = ChangePersonalInfoForm()
