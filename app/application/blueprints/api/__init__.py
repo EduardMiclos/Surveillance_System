@@ -43,6 +43,12 @@ Receivers
 """
 for resource_class in Receivers.ReceiverInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
+
+"""
+Others
+"""
+for resource_class in Others.CameraInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
     
 # """
 # Informers

@@ -27,3 +27,4 @@ htmlcov/
 
 app/database/database.db
 migrations/
+profile_dir
