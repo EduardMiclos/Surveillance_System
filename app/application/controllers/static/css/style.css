@@ -113,3 +113,8 @@ body {
     color: #ffffff;
     background-color: #000000;
   }
+
+  .disabled-div {
+    pointer-events: none;
+    opacity: 0.6;
+  }
