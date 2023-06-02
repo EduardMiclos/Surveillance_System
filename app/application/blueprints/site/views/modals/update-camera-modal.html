@@ -57,7 +57,11 @@
   
   <script>
     $(document).ready(function() {
+        var cameraIdToUpdate;
       $('.btn-update-camera').on('click', function() {
+        cameraIdToUpdate = $(this).data('camera-id');
+        $("#updated-camera-id").val(cameraIdToUpdate);
+
         $('#update-camera-modal').modal('show');
       });
     });
