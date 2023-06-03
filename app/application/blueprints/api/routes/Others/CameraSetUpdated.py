@@ -1,4 +1,4 @@
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from flask_jwt import JWTError
 
 
@@ -31,9 +31,10 @@ class CameraSetUpdated(CameraInterface):
             event_streamer = EventStreamerFactory.create(EventType.MANAGE_CAMERA_REFRESH)
             event_streamer.stream()
             
-            pass
         except JWTError:
             response.set_forbidden()
             return response.get_response()
             
-        camera_id = get_jwt_identity()
+        response.add_data('JWT Token', create_access_token(identity = camera_id))
+        response.set_success()
+        return response.get_response()

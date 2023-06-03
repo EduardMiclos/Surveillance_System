@@ -36,6 +36,12 @@ Utils Providers
 """
 for resource_class in UtilsProviders.ProviderInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
+    
+"""
+Frames Providers
+"""
+for resource_class in FramesProviders.FramesProviderInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
 
 
 """

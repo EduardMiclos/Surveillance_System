@@ -118,3 +118,24 @@ body {
     pointer-events: none;
     opacity: 0.6;
   }
+
+  .videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .video-container {
+    width: 50%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .video-container img {
+    width: 100%;
+    height: auto;
+  }

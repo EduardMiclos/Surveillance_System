@@ -1,10 +1,9 @@
-from flask import Flask, jsonify
+from flask import jsonify
 from datetime import datetime
 
 class Response:
     def __init__(self):
         self.json = {}
-       
         
     def get_code(self):
         return self.json['Code']
