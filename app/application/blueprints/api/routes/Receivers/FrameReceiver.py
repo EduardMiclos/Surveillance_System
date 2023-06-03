@@ -1,5 +1,7 @@
 from flask import Response as FlaskResponse
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+import jwt
+import datetime
 
 # Third party imports
 from flask_restful import request
@@ -18,8 +20,8 @@ class FrameReceiver(ReceiverInterface):
     
     @jwt_required()
     def post(self):
-        camera_id = get_jwt_identity()
         response = Response()
+        camera_id = get_jwt_identity()
         
         if camera_id is None:
             response.set_forbidden()
