@@ -57,6 +57,10 @@ class HWSystem:
             json_entity (Dict[str, Any]): The JSON data to write.
             file_name (str): The name of the file.
         """
+        
+        if 'access_key' in json_entity:
+            json_entity['access_key'] = ""
+        
         json_object = json.dumps(json_entity)
         with open(file_name, "w") as out:
             out.write(json_object)
