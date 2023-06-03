@@ -18,9 +18,12 @@
         <tr>
           <td style="width: 5%;">
             <div class="{{ 'disabled-div' if camera.status.id == 2 else '' }}"">
-            <button class="btn btn-link btn-sm btn-toggle-camera power-btn" data-camera-id="{{ camera.id }}">
-              <i class="fas fa-power-off fa-lg"></i>
-            </button>
+              <form method="POST" action="/admin/camera/toggle">
+                <input type="hidden" name="toggled_camera_id" id="toggled-camera-id" value="{{ camera.id }}">
+                <button class="btn btn-link btn-sm btn-toggle-camera power-btn" data-camera-id="{{ camera.id }}">
+                  <i class="fas fa-power-off fa-lg"></i>
+                </button>
+            </form>
           </div>
           </td>
           <td class="col-md-2">

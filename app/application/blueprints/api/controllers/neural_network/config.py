@@ -56,3 +56,8 @@ RECOMM_COMPRESSION_ALG = "h264"
 Recommended video extension.
 """
 RECOMM_VIDEO_EXT = "mp4"
+
+"""
+Path to the NN Model.
+"""
+NN_MODEL_PATH = "/home/miclosedi/Surveillance_System/app/application/blueprints/api/controllers/neural_network/trained_model/rwf2000_model"

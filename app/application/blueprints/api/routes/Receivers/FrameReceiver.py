@@ -1,54 +1,42 @@
-# Standard library imports
-import tensorflow as tf
-import numpy as np
-import cv2 as cv
-import os
+from flask import Response as FlaskResponse
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+import jwt
+import datetime
 
 # Third party imports
-from flask_restful import Resource, request
+from flask_restful import request
+import os
+import cv2 as cv
 
 # Local application imports
-from ..schemas.FrameReceiverSchema import frame_receiver_schema
-from ...controllers.neural_network.NNAdapter import NNAdapter
-from ...controllers.neural_network import config
+from ...controllers import Response
+from flask_restful import request
 from .ReceiverInterface import ReceiverInterface
-
+from .....database.models import Camera
 
 class FrameReceiver(ReceiverInterface):
     base_route = f'{ReceiverInterface.base_route}/frames'
     nn_adapter = None
     
-    """
-    Caching the NNAdapter (which constructs the Neural
-    Model once and loads its weights).
-    """
-    def __init__(self):
-        if FrameReceiver.nn_adapter is None:
-            FrameReceiver.nn_adapter = NNAdapter()
-    
+    @jwt_required()
     def post(self):
+        response = Response()
+        camera_id = get_jwt_identity()
+        
+        if camera_id is None:
+            response.set_forbidden()
+            return response.get_response()
+        
+        camera = Camera.query.filter_by(id=camera_id).first()
+        if camera.status_id != 1:
+            response.set_code(400)
+            response.set_message('The camera is supposed to be inactive!')
+            return response.get_response()
+        
         file = request.files['Video2.mp4']
-        file.save('./temp/Video.mp4')
+        file.save('Video.mp4')
         
-        # Load the video file
-        cap = cv.VideoCapture('./temp/Video.mp4')
-
-        # Get the number of frames in the video
-        num_frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
-
-        # Create a numpy array to store the frames
-        frames = np.zeros((num_frames, 360, 360, 3), dtype=np.float32)
-
-        # Loop through the frames and store them in the numpy array
-        for i in range(num_frames):
-            ret, frame = cap.read()
-            if ret:
-                frame = cv.resize(frame, (360, 360))
-                frames[i] = frame
-
-        # Release the video capture object
-        cap.release()
-        os.remove('./temo/Video.mp4')
-        
-        p = FrameReceiver.nn_adapter.predict_violence(frames)
-        return str(p)
+        response = Response()
+        response.add_data('JWT Token', create_access_token(identity = camera_id))
+        response.set_success()
+        return response.get_response()
