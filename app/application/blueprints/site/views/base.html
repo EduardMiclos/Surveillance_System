@@ -1,2 +1,62 @@
 {% include 'header.html' %}
+
+<style>
+  .videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .video-container {
+    width: 50%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .video-container img {
+    width: 100%;
+    height: auto;
+  }
+</style>
+
+<div class="container mt-4">
+  <h3>Panou principal</h3>
+  <p>A comprehensive live video streaming solution for monitoring multiple camera feeds simultaneously.</p>
+
+  <div class="videos-container">
+    <div class="video-container">
+      <img id="video-stream1" src="" alt="Video Stream 1" />
+      <script>
+        // JavaScript code to update the video stream 1
+        const video1 = document.getElementById('video-stream1');
+        video1.src = '/api/send/frames';  // Set the source URL to the Flask route
+
+        // Optional: Auto-refresh the video stream every 1 second
+        setInterval(() => {
+          video1.src += '?' + new Date().getTime();
+        }, 1000);
+      </script>
+    </div>
+
+    <div class="video-container">
+      <img id="video-stream2" src="" alt="Video Stream 2" />
+      <script>
+        // JavaScript code to update the video stream 2
+        const video2 = document.getElementById('video-stream2');
+        video2.src = '/api/send/frames';  // Set the source URL to the Flask route
+
+        // Optional: Auto-refresh the video stream every 1 second
+        setInterval(() => {
+          video2.src += '?' + new Date().getTime();
+        }, 1000);
+      </script>
+    </div>
+  </div>
+  <!-- Add more video containers for additional streams -->
+</div>
+
 {% include 'footer.html' %}

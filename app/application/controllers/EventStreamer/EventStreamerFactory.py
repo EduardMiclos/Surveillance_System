@@ -7,6 +7,8 @@ class EventStreamerFactory:
             EventType.RASP_UPDATE: {"type": 'RASP_UPDATE'},
             EventType.RASP_EDIT: {"type": 'RASP_EDIT'},
             EventType.RASP_REMOVE: {"type": 'RASP_REMOVE'},
+            EventType.RASP_START: {"type": 'RASP_START'},
+            EventType.RASP_STOP: {"type": 'RASP_STOP'},
             EventType.MANAGE_USER_REFRESH: {"type": 'USER_REFRESH'},
             EventType.MANAGE_FOOTAGES_REFRESH: {"type": 'FOOTAGES_REFRESH'},
             EventType.MANAGE_CAMERA_REFRESH: {"type": 'CAMERA_REFRESH'}
