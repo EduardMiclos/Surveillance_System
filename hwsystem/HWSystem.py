@@ -283,7 +283,10 @@ class HWSystem:
                 if response_json['Code'] == 400:
                     self.handle_sse_stop()
                     return
-
+                elif response_json['Code'] == 403:
+                    if os.path.exists(self.config_json_path):
+                       os.remove(self.config_json_path) 
+    
                 self.renew_jwt_token(response.json())
             sleep(5)
 
