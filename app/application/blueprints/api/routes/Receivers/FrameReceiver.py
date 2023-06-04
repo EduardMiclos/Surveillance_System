@@ -28,6 +28,11 @@ class FrameReceiver(ReceiverInterface):
             return response.get_response()
         
         camera = Camera.query.filter_by(id=camera_id).first()
+        
+        if camera is None:
+            response.set_forbidden()
+            return response.get_response()
+        
         if camera.status_id != 1:
             response.set_code(400)
             response.set_message('The camera is supposed to be inactive!')
