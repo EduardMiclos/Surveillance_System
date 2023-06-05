@@ -40,7 +40,7 @@ while True:
 
     if check_server(server_addr, server_port):
         print('[SUCCESS] Received response from the Central Server!')
-        os.system(f'python3 main.py')
+        os.system(f'python main.py')
     else:
         print('[FAIL] No response from the Central Server.')
         print('[INFO] Retrying...')

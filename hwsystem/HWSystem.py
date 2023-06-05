@@ -1,4 +1,4 @@
-import cv2
+import cv2 as cv
 import os
 import requests
 import json
@@ -32,7 +32,14 @@ class HWSystem:
         self.registration_trials = 0
         self.register_json_path = register_json_path
         self.config_json_path = config_json_path
-
+        
+        self.RASPICAM_ID = 0
+        self.OUTPUT_CHUNK_NAME = 'framechunk'
+        
+        
+        self.video_capturer = None
+        self.video_writer = None
+        
         with open(self.register_json_path) as register_data:
             self.REGISTER_JSON = json.load(register_data)
         self.REGISTER_JSON['access_key'] = self.ACCESS_KEY
@@ -129,7 +136,14 @@ class HWSystem:
 
         Sends a request to update the camera status to the central server.
         """
+        self.stop_livestream.clear()
+
         self.update_system()
+        
+        self.livestream_thread = threading.Thread(target=self.livestream)
+        self.livestream_thread.start()
+        print('[INFO] Started livestreaming!')
+        
         response = requests.get(f'{self.BASE_ROUTE}/api/camera/set-updated',
                                 headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']},
                                 verify=True)
@@ -158,6 +172,7 @@ class HWSystem:
         Stops the livestream.
         """
         self.stop_livestream.set()
+        self.video_capturer.release()
         print('[INFO] Stopped livestreaming!')
 
     def listen_for_sse(self) -> None:
@@ -175,6 +190,10 @@ class HWSystem:
             event_data = json.loads(event['data'])
 
             print(f'[INFO] Catched event: {event_msg}')
+
+            if not 'Camera ID' in event_data:
+                print(f'[INFO] Ignored event: {event_msg}')
+                return
 
             event_camera_id = event_data['Camera ID']
             if event_camera_id != self.CONFIG_JSON['Camera ID']:
@@ -268,27 +287,86 @@ class HWSystem:
 
         print('[SUCCESS] Renewed JWT Token!')
 
+    def record_chunk(self) -> None:
+        i = 0
+        
+        output_file_name = self.OUTPUT_CHUNK_NAME + '.' + self.CONFIG_JSON['Preprocess']['DataFormat']
+        
+        FRAME_WIDTH = int(self.video_capturer.get(cv.CAP_PROP_FRAME_WIDTH))
+        FRAME_HEIGHT = int(self.video_capturer.get(cv.CAP_PROP_FRAME_HEIGHT))
+        
+        # VideoWriter object to save the recorded video.
+        self.video_writer = cv.VideoWriter(output_file_name,
+                             cv.VideoWriter_fourcc(*'mp4v'), 
+                             self.CONFIG_JSON['Preprocess']['ChunkSize'],
+                             (360, 360))
+                             
+        while True:
+            # Read a frame from the camera.
+            ret, frame = self.video_capturer.read()
+            
+            # Check if the frame has been successfully read.
+            if not ret:
+                print('[ERROR] Failed to read the frame!')
+                print('Aborting...')
+                exit(1)
+                
+            resized_frame = cv.resize(frame, (360, 360))
+                
+            # Write the frame to the output video.
+            self.video_writer.write(resized_frame) 
+            
+            # Exit the loop if 'q' is pressed.
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                break
+                
+            i += 1
+            if i >= self.CONFIG_JSON['Preprocess']['ChunkSize']:
+                break
+                
+        self.video_writer.release()
+        
+        
     def livestream(self) -> None:
         """
         Perform the livestreaming to the central server.
         """
+        output_file_name = self.OUTPUT_CHUNK_NAME + '.' + self.CONFIG_JSON['Preprocess']['DataFormat']
+        
         while not self.stop_livestream.is_set():
             print('[INFO] Livestreaming to the central server...')
-            with open("actual_violence.mp4", 'rb') as f:
-                response = requests.post(f'{self.BASE_ROUTE}/api/send/frames',
-                                         files={"Video2.mp4": f},
-                                         headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']})
-                response_json = response.json()
-
-                if response_json['Code'] == 400:
-                    self.handle_sse_stop()
-                    return
-                elif response_json['Code'] == 403:
-                    if os.path.exists(self.config_json_path):
-                       os.remove(self.config_json_path) 
-    
-                self.renew_jwt_token(response.json())
-            sleep(5)
+            self.record_chunk()
+            
+            with open(output_file_name, 'rb') as f:
+                print(self.BASE_ROUTE)
+                
+                try: 
+                    response = requests.post(f'{self.BASE_ROUTE}/api/send/frames',
+                                                files={output_file_name: f},
+                                                headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']})
+                    response_json = response.json()
+                except:
+                    raise requests.exceptions.ConnectionError()
+                        
+            
+            if 'Code' not in response_json:
+                self.video_capturer.release()
+                raise requests.exceptions.ConnectionError()
+            
+            if response_json['Code'] == 400:
+                self.handle_sse_stop()
+                return
+            elif response_json['Code'] == 403:
+                if os.path.exists(self.config_json_path):
+                    os.remove(self.config_json_path)
+            
+            # Write the frames again from the beginning.
+            #self.video_writer.set(cv.CAP_PROP_POS_FRAMES, 0)
+            
+            # Renewing the JWT Token
+            self.renew_jwt_token(response.json())
+            
+        self.video_capturer.release()
 
     def start_module(self) -> None:
         """
@@ -297,7 +375,17 @@ class HWSystem:
         while True:
             try:
                 print("[START] Raspberry PI module...")
+                
+                # Open the video capture.
+                self.video_capturer = cv.VideoCapture(self.RASPICAM_ID)
 
+                # Check if the camera has ben successfully opened.
+                if not self.video_capturer.isOpened():
+                        print('[ERROR] Failed to open the camera!')
+                        print('Aborting...')
+                        exit(1)
+                
+        
                 register_is_success = None
                 if not os.path.exists(self.config_json_path):
                     register_is_success = self.attempt_registration()
@@ -317,6 +405,11 @@ class HWSystem:
             except requests.exceptions.ConnectionError:
                 if self.livestream_thread.is_alive():
                     self.livestream_thread.join()
+                
+                self.video_capturer.release()
+                
+                print('[ERROR] Connection error! Aborting...')
+                exit(1)
 
             sleep(5)
 
