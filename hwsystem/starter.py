@@ -33,11 +33,10 @@ def check_server(host: str, port: int) -> bool:
     try:
         with telnetlib.Telnet(host, port, timeout=5) as tn:
             return True
-    except (ConnectionRefusedError, TimeoutError):
+    except:
         return False
 
 while True:
-
     if check_server(server_addr, server_port):
         print('[SUCCESS] Received response from the Central Server!')
         os.system(f'python main.py')
