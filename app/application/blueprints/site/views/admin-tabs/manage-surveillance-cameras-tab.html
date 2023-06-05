@@ -17,33 +17,48 @@
         {% for camera in cameras %}
         <tr>
           <td style="width: 5%;">
-            <button class="btn btn-link btn-sm btn-toggle-camera power-btn" data-camera-id="{{ camera.id }}">
-              <i class="fas fa-power-off fa-lg"></i>
-            </button>
+            <div class="{{ 'disabled-div' if camera.status.id == 2 else '' }}"">
+              <form method="POST" action="/admin/camera/toggle">
+                <input type="hidden" name="toggled_camera_id" id="toggled-camera-id" value="{{ camera.id }}">
+                <button class="btn btn-link btn-sm btn-toggle-camera power-btn" data-camera-id="{{ camera.id }}">
+                  <i class="fas fa-power-off fa-lg"></i>
+                </button>
+            </form>
+          </div>
           </td>
           <td class="col-md-2">
             <i class="fas fa-video"></i>&nbsp;
             <b>{{ camera.name }}</b>
           </td>
           <td>
-            <span class="font-weight-bold {{ 'text-success' if camera.status.id == 1 else 'text-danger' }}">
+            {% if camera.status.id == 0 %}
+            <span class="font-weight-bold text-danger">
               {{ camera.status.name }}
             </span>
+            {% elif camera.status.id == 1 %}
+            <span class="font-weight-bold text-success">
+              {{ camera.status.name }}
+            </span>
+            {% else %}
+            <span class="font-weight-bold text-info">
+              {{ camera.status.name }}
+            </span>
+            {% endif %}
           </td>
           <td class="col-md-2">{{ camera.description }}</td>
           <td>{{ camera.last_restart }}</td>
           <td>{{ camera.last_update }}</td>
           <td class="col-md-1">
             <div class="actions-list">
-              <div class="clickable icon-action text-success">
+              <div class="clickable icon-action text-info {{ 'disabled-div' if camera.status.id == 2 else '' }}">
                 <i class="fa fa-refresh"></i>
-                <span>Actualizează</span>
+                <span class="btn-update-camera" data-camera-id="{{ camera.id }}">Actualizează</span>
               </div>
-              <div class="clickable icon-action">
+              <div class="clickable icon-action {{ 'disabled-div' if camera.status.id == 2 else '' }}">
                 <i class="fas fa-edit"></i>
                 <span class="btn-edit-camera" data-camera-id="{{ camera.id }}">Editează</span>
               </div>
-              <div class="clickable icon-action">
+              <div class="clickable icon-action {{ 'disabled-div' if camera.status.id == 2 else '' }}">
                 <i class="fas fa-trash-alt"></i>
                 <span class="btn-delete-camera" data-camera-id="{{ camera.id }}">Înlăturare</span>
               </div>
@@ -63,6 +78,11 @@
       {% include "modals/deleted-camera-info-modal.html" %}
       {% endif %}
 
+      {% if updated_camera %}
+      {% include "modals/updated-camera-info-modal.html" %}
+      {% endif %}
+
       {% include "modals/edit-camera-modal.html" %}
+      {% include "modals/update-camera-modal.html" %}
       {% include "modals/delete-camera-modal.html" %}
     </div>

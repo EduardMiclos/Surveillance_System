@@ -27,7 +27,8 @@ class GetCamera(AdminInterface):
             'last_restart': camera.last_restart,
             'last_update': camera.last_update,
             'footages_path': camera.footages_path,
-            'temp_path': camera.temp_path
+            'temp_path': camera.temp_path,
+            'preprocess_data': camera.preprocess_data
         }
         
         response.set_success()

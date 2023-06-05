@@ -8,6 +8,7 @@ from ..config import FOOTAGE_PATH
 from ..AdminInterface import AdminInterface, admin_required
 from ......database import db
 from ......database.models import Footage, Camera
+from ......controllers.EventStreamer import *
 
 class DeleteCamera(AdminInterface):
     base_route = f'{AdminInterface.base_route}/camera/delete'
@@ -23,6 +24,9 @@ class DeleteCamera(AdminInterface):
         footages_path = f'{FOOTAGE_PATH}/{camera.footages_path}'
         temp_path = f'{FOOTAGE_PATH}/temp/{camera.temp_path}'
         
+        event_streamer = EventStreamerFactory.create(EventType.RASP_REMOVE)
+        event_streamer.add_data('Camera ID', camera.id)
+        
         if delete_footages:
             footages = Footage.query.filter_by(camera_id=camera_id).all()
             for footage in footages:
@@ -37,5 +41,6 @@ class DeleteCamera(AdminInterface):
         camera_query.delete()
         db.session.commit()
         
+        event_streamer.stream()
         session['deleted_camera'] = True
         return redirect('/admin/manage-surveillance-cameras')

@@ -2,6 +2,7 @@
 from flask import render_template, make_response, flash, redirect
 from flask_login import login_required, current_user
 
+from .....controllers.cache import cache
 from .ProfileInterface import ProfileInterface
 from ...forms import ChangePasswordForm
 from .....database import db
@@ -11,6 +12,7 @@ class ChangePassword(ProfileInterface):
     base_route = f'{ProfileInterface.base_route}/change-password'
     
     @login_required
+    @cache.cached(timeout = None)
     def get(self):
         headers = {'Content-Type': 'text/html'}
         

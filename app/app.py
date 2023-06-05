@@ -3,13 +3,14 @@ from flask_login import LoginManager
 from flask_sse import sse
 from flask_jwt_extended import JWTManager
 from redis import StrictRedis, exceptions
-
+from flask_caching import Cache
 
 if __name__ == 'app':
     from application.controllers.Application import Application
     from application.blueprints.api import api_bp
     from application.blueprints.site import site_bp
     from application.database.database import db
+    from application.controllers.cache import cache
     from application.instance import Config
     from application.database.models import User
 else:
@@ -17,6 +18,7 @@ else:
     from .application.blueprints.api import api_bp
     from .application.blueprints.site import site_bp
     from .application.database.database import db
+    from .application.controllers.cache import cache
     from .application.instance import Config
     from .application.database.models import User
 
@@ -77,3 +79,8 @@ except exceptions.ConnectionError as e:
 Initializing the JWT.
 """
 jwt = JWTManager(app)
+
+"""
+Initializing the Cache.
+"""
+cache.init_app(app)

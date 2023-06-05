@@ -9,7 +9,7 @@ from .config import FOOTAGE_PATH
 class Camera(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
-    status_id = db.Column(db.Integer, db.ForeignKey('camera_status.id'), nullable=False, default=0)
+    status_id = db.Column(db.Integer, db.ForeignKey('camera_status.id'), nullable=False, default=1)
     status = db.relationship('CameraStatus', lazy=True)
     description = db.Column(db.String(500), nullable=True)
     last_restart = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
@@ -24,11 +24,12 @@ class Camera(db.Model):
         CheckConstraint("temp_path != ''", name='non_empty_temp_path_check')
     )
     
-    def __init__(self, name, status_id=0, description=None, footages_path=None, temp_path=None):
+    def __init__(self, name, status_id=1, description=None, footages_path=None, temp_path=None, preprocess_data=None):
         self.name = name
         self.status_id = status_id
         self.description = description
-
+        self.preprocess_data = preprocess_data
+        
         if footages_path is not None:
             self.footages_path = footages_path
         else:

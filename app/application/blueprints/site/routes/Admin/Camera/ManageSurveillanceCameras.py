@@ -20,6 +20,7 @@ class ManageSurveillanceCameras(AdminInterface):
         cameras = Camera.query.all()
         deleted_camera = session.pop('deleted_camera', default=False)
         edited_camera = session.pop('edited_camera', default=False)
+        updated_camera = session.pop('updated_camera', default=False)
         
         return make_response(
             render_template('manage-surveillance-cameras.html',
@@ -27,6 +28,7 @@ class ManageSurveillanceCameras(AdminInterface):
                             cameras = cameras,
                             deleted_camera = deleted_camera,
                             edited_camera = edited_camera, 
+                            updated_camera = updated_camera,
                             cameraedit_form = cameraedit_form),
             200, headers
             )

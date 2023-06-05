@@ -1,4 +1,5 @@
 var source = new EventSource("/stream");
-source.addEventListener('camera_register_refresh', _ => {
+
+source.addEventListener('CAMERA_REFRESH', _ => {
     location.reload();
 }, false);

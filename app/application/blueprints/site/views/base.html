@@ -1,2 +1,50 @@
 {% include 'header.html' %}
+
+<div class="container mt-4">
+  <h3>Panou principal</h3>
+  <p>Aici puteți vizualiza transmisia live a tuturor camerelor de supraveghere conectate.</p>
+
+  <div class="videos-container">
+    {% for camera in cameras %}
+    <div class="video-container">
+      <img id="video-stream{{ camera.id }}" src="" alt="Video Stream {{ camera.id }}"/>
+      <div class="camera-info pt-3 pb-3 bg-dark text-white text-center">
+        <div class="camera-name">
+          <i class="fas fa-video"></i>&nbsp;
+          <b>{{ camera.name }}</b>
+        </div>
+        <div class="camera-status">
+          {% if camera.status.id == 0 %}
+            <span class="font-weight-bold text-danger">
+              {{ camera.status.name }}
+            </span>
+            {% elif camera.status.id == 1 %}
+            <span class="font-weight-bold text-success">
+              {{ camera.status.name }}
+            </span>
+            {% else %}
+            <span class="font-weight-bold text-info">
+              {{ camera.status.name }}
+            </span>
+            {% endif %}
+        </div>
+      </div>
+      <script>
+        const video{{camera.id}} = document.getElementById('video-stream{{ camera.id }}');
+
+        {% if camera.status.id != 1 %}
+        video{{camera.id}}.src = '/static/images/inactive_camera.png';
+        {% else %}
+        video{{camera.id}}.src = '/api/get/frames/{{ camera.id }}';
+        {% endif %}
+        
+        setInterval(() => {
+          video{{camera.id}}.src += '?' + new Date().getTime();
+        }, 1000);
+      </script>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% include 'footer.html' %}

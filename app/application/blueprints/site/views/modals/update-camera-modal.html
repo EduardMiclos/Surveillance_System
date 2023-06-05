@@ -1,0 +1,68 @@
+  <div class="modal fade" id="update-camera-modal" tabindex="-1" role="dialog" aria-labelledby="updateCameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="updateCameraModalLabel">Actualizare cameră de supraveghere</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <form method="POST" action="/admin/camera/update">
+          <input type="hidden" name="updated_camera_id" id="updated-camera-id" value="">
+          <div id="update-modal-body" class="modal-body">
+            <p>
+              Efectuați o actualizare <b>over-the-air</b> a modulului selectat. Procesul de actualizare
+              presupune:
+            </p>
+            <hr>
+            <div class="update-modal-row row">
+              <div class="col-1 text-success">
+                <i class="fas fa-check-circle icon"></i>
+              </div>
+              <div class="col-11">
+                <b>Actualizare de sistem</b>. Aducerea la zi a tuturor bibliotecilor, respectiv a 
+                dependințelor ce sunt specifice sistemului de operare.
+              </div>
+            </div>
+            <div class="update-modal-row row">
+              <div class="col-1 text-success">
+                <i class="fas fa-check-circle icon"></i>
+              </div>
+              <div class="col-11">
+                <b>Actualizarea datelor de intrare</b>. Aducerea la zi a caracteristicilor ce țin
+                de structura și organizarea frame-urilor, respectiv a calupurilor de frame-uri: dimensiunea
+                calupului, dimensiunea în pixeli a imaginii, algoritmul de compresie etc..
+              </div>
+            </div>
+            <div class="update-modal-row row">
+              <div class="col-1 text-success">
+                <i class="fas fa-check-circle icon"></i>
+              </div>
+              <div class="col-11">
+                <b>Actualizarea algoritmilor de preprocesare</b>. Aducerea la zi a utilitarelor, respectiv a 
+                unităților algoritmice folosite cu scopul preprocesării calupului de frame-uri înaintea
+                transmiterii către server-ul central. Se aplică numai la sistemele care au bifată această funcționalitate.
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+            <button type="submit" class="btn btn-info" id="confirm-camera-update-btn">Actualizează</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    $(document).ready(function() {
+        var cameraIdToUpdate;
+      $('.btn-update-camera').on('click', function() {
+        cameraIdToUpdate = $(this).data('camera-id');
+        $("#updated-camera-id").val(cameraIdToUpdate);
+
+        $('#update-camera-modal').modal('show');
+      });
+    });
+  </script>

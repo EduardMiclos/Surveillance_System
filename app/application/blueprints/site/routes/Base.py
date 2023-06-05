@@ -4,7 +4,7 @@ from flask_login import login_required
 
 # Local application imports
 from .ViewerInterface import ViewerInterface
-
+from ....database.models import Camera
 
 class Base(ViewerInterface):
     base_route = f'{ViewerInterface.base_route}/'
@@ -13,7 +13,9 @@ class Base(ViewerInterface):
     def get(self):
         headers = {'Content-Type': 'text/html'}
        
+        cameras = Camera.query.all()
+       
         return make_response(
-            render_template('base.html'), 
+            render_template('base.html', cameras = cameras), 
             200, headers
             )

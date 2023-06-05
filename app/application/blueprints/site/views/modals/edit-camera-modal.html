@@ -22,6 +22,14 @@
               <label for="description">Descriere</label>
               {{ cameraedit_form.description(class="form-control", id="camera-description")}}
             </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                {{ cameraedit_form.preprocess_data(class="form-check-input", id="camera-preprocess_data") }}
+                <label class="form-check-label" for="preprocess_data">Preprocesare locală a imaginilor</label>
+              </div>
+            </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
@@ -47,9 +55,11 @@
           success: function(response) {
             name = response.Data.Camera['name']
             description = response.Data.Camera['description']
+            preprocess_data = response.Data.Camera['preprocess_data']
 
             $('#camera-name').val(name)
             $('#camera-description').val(description)
+            $('#camera-preprocess_data').prop("checked", preprocess_data)
 
             $('#edit-camera-modal').modal('show');
           }

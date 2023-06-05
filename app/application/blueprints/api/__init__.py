@@ -36,6 +36,12 @@ Utils Providers
 """
 for resource_class in UtilsProviders.ProviderInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
+    
+"""
+Frames Providers
+"""
+for resource_class in FramesProviders.FramesProviderInterface.__subclasses__():
+    api.add_resource(resource_class, resource_class.base_route)
 
 
 """
@@ -49,25 +55,3 @@ Others
 """
 for resource_class in Others.CameraInterface.__subclasses__():
     api.add_resource(resource_class, resource_class.base_route)
-    
-# """
-# Informers
-# """
-# api.add_resource(PreprocessInformer, '/get/info/preprocess')
-# api.add_resource(UtilsInformer, '/get/info/utils')
-
-# """
-# File providers
-# """
-# api.add_resource(BackgrSupprProvider, f'/get/utils/{BackgrSupprProvider.base_route}')
-# api.add_resource(CenterCropProvider, f'/get/utils/{CenterCropProvider.base_route}')
-# api.add_resource(FrameDifferenceProvider, f'/get/utils/{FrameDifferenceProvider.base_route}')
-# api.add_resource(NormalizationProvider, f'/get/utils/{NormalizationProvider.base_route}')
-
-# print(Resource.__subclasses__()[0].__bases__);
-
-
-# """
-# POST resources.
-# """
-# api.add_resource(FrameReceiver, '/send/frames')
