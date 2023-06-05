@@ -136,7 +136,14 @@ class HWSystem:
 
         Sends a request to update the camera status to the central server.
         """
+        self.stop_livestream.clear()
+
         self.update_system()
+        
+        self.livestream_thread = threading.Thread(target=self.livestream)
+        self.livestream_thread.start()
+        print('[INFO] Started livestreaming!')
+        
         response = requests.get(f'{self.BASE_ROUTE}/api/camera/set-updated',
                                 headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']},
                                 verify=True)
@@ -183,6 +190,10 @@ class HWSystem:
             event_data = json.loads(event['data'])
 
             print(f'[INFO] Catched event: {event_msg}')
+
+            if not 'Camera ID' in event_data:
+                print(f'[INFO] Ignored event: {event_msg}')
+                return
 
             event_camera_id = event_data['Camera ID']
             if event_camera_id != self.CONFIG_JSON['Camera ID']:
@@ -280,6 +291,7 @@ class HWSystem:
         i = 0
         
         output_file_name = self.OUTPUT_CHUNK_NAME + '.' + self.CONFIG_JSON['Preprocess']['DataFormat']
+        
         FRAME_WIDTH = int(self.video_capturer.get(cv.CAP_PROP_FRAME_WIDTH))
         FRAME_HEIGHT = int(self.video_capturer.get(cv.CAP_PROP_FRAME_HEIGHT))
         
@@ -287,7 +299,7 @@ class HWSystem:
         self.video_writer = cv.VideoWriter(output_file_name,
                              cv.VideoWriter_fourcc(*'mp4v'), 
                              self.CONFIG_JSON['Preprocess']['ChunkSize'],
-                             (FRAME_WIDTH, FRAME_HEIGHT))
+                             (360, 360))
                              
         while True:
             # Read a frame from the camera.
@@ -299,8 +311,10 @@ class HWSystem:
                 print('Aborting...')
                 exit(1)
                 
+            resized_frame = cv.resize(frame, (360, 360))
+                
             # Write the frame to the output video.
-            self.video_writer.write(frame) 
+            self.video_writer.write(resized_frame) 
             
             # Exit the loop if 'q' is pressed.
             if cv.waitKey(1) & 0xFF == ord('q'):
@@ -325,10 +339,15 @@ class HWSystem:
             
             with open(output_file_name, 'rb') as f:
                 print(self.BASE_ROUTE)
-                response = requests.post(f'{self.BASE_ROUTE}/api/send/frames',
-                                         files={output_file_name: f},
-                                         headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']})
-                response_json = response.json()
+                
+                try: 
+                    response = requests.post(f'{self.BASE_ROUTE}/api/send/frames',
+                                                files={output_file_name: f},
+                                                headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']})
+                    response_json = response.json()
+                except:
+                    raise requests.exceptions.ConnectionError()
+                        
             
             if 'Code' not in response_json:
                 self.video_capturer.release()
@@ -347,7 +366,7 @@ class HWSystem:
             # Renewing the JWT Token
             self.renew_jwt_token(response.json())
             
-        cap.release()
+        self.video_capturer.release()
 
     def start_module(self) -> None:
         """
@@ -386,6 +405,11 @@ class HWSystem:
             except requests.exceptions.ConnectionError:
                 if self.livestream_thread.is_alive():
                     self.livestream_thread.join()
+                
+                self.video_capturer.release()
+                
+                print('[ERROR] Connection error! Aborting...')
+                exit(1)
 
             sleep(5)
 
