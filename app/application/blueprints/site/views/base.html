@@ -4,10 +4,10 @@
   <h3>Panou principal</h3>
   <p>Aici puteți vizualiza transmisia live a tuturor camerelor de supraveghere conectate.</p>
 
-  <div class="videos-container">
+  <div class="videos-container mt-2">
     {% for camera in cameras %}
     <div class="video-container">
-      <img id="video-stream{{ camera.id }}" src="" alt="Video Stream {{ camera.id }}"/>
+      <img id="video-stream{{ camera.id }}" src="" alt="Video Stream {{ camera.id }}">
       <div class="camera-info pt-3 pb-3 bg-dark text-white text-center">
         <div class="camera-name">
           <i class="fas fa-video"></i>&nbsp;

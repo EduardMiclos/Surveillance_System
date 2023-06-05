@@ -4,6 +4,12 @@ regarding the preprocessing of images data.
 """
 
 """
+Recommended name of the chunk that is being
+sent to the central server.
+"""
+RECOMM_CHUNK_NAME = 'framechunk'
+
+"""
 Recommended number of frames to be send
 for each request.
 """
