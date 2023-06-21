@@ -57,9 +57,9 @@ class WSGI:
                             '--bind',
                             f'0.0.0.0:{self.port}',
                             f'--workers={workers}',
-                            '--worker-class=gevent',
-                            '--worker-connections=1000',
-                            '--preload'], check = True)
+                            '--worker-class=sync',
+                            '--preload',
+                            '--worker-connections=10000'], check = True)
             
         except subprocess.CalledProcessError as err:
             print(f'ERROR: Occured when trying to initialize a gateway interface.\nError code: {err.returncode}\nError output: {err.output}')

@@ -38,9 +38,11 @@
         video{{camera.id}}.src = '/api/get/frames/{{ camera.id }}';
         {% endif %}
         
+        let original_src{{camera.id}} = video{{camera.id}}.src;
         setInterval(() => {
+          video{{camera.id}}.src = original_src{{camera.id}}
           video{{camera.id}}.src += '?' + new Date().getTime();
-        }, 1000);
+        }, 3000);
       </script>
     </div>
     {% endfor %}

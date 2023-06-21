@@ -1,9 +1,4 @@
-# Standard library imports
-import os
-import time
-import stat
-from datetime import datetime
-
+# Standard library import
 # Third party imports
 from flask import send_file
 
@@ -16,4 +11,5 @@ class FootageProvider(FootageProviderInterface):
     
     def get(self, camera_name, file_name):
         file_path = f'{FOOTAGE_PATH}/{camera_name}/{file_name}'
-        return send_file(file_path)
+        
+        return send_file(file_path, mimetype='video/mp4')
