@@ -58,7 +58,8 @@ class WSGI:
                             f'0.0.0.0:{self.port}',
                             f'--workers={workers}',
                             '--worker-class=sync',
-                            '--preload',
+                            # '--preload',
+                            '--timeout=2000',
                             '--worker-connections=10000'], check = True)
             
         except subprocess.CalledProcessError as err:

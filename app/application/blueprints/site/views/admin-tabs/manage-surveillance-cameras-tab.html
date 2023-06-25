@@ -50,18 +50,18 @@
           <td>{{ camera.last_update }}</td>
           <td class="col-md-1">
             <div class="actions-list">
-              <div class="clickable icon-action text-info {{ 'disabled-div' if camera.status.id == 2 else '' }}">
+              <div class="clickable icon-action text-info {{ 'disabled-div' if camera.status.id != 1 else '' }}">
                 <i class="fa fa-refresh"></i>
                 <span class="btn-update-camera" data-camera-id="{{ camera.id }}">Actualizează</span>
               </div>
-              <div class="clickable icon-action {{ 'disabled-div' if camera.status.id == 2 else '' }}">
+              <div class="clickable icon-action {{ 'disabled-div' if camera.status.id != 1 else '' }}">
                 <i class="fas fa-edit"></i>
                 <span class="btn-edit-camera" data-camera-id="{{ camera.id }}">Editează</span>
               </div>
-              <!-- <div class="clickable icon-action {{ 'disabled-div' if camera.status.id == 2 else '' }}"> -->
+              <div class="clickable icon-action {{ 'disabled-div' if camera.status.id != 1 else '' }}">
                 <i class="fas fa-trash-alt"></i>
                 <span class="btn-delete-camera" data-camera-id="{{ camera.id }}">Înlăturare</span>
-              <!-- </div> -->
+              </div>
             </div>
           </td>
         </tr>

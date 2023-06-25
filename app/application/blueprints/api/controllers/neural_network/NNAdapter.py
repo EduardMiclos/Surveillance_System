@@ -49,6 +49,5 @@ class NNAdapter:
 
     def predict_violence(self, data: object):
         data = self.input_adapter.transform_data(data)
-
         p = self.neural_model.predict(data)
         return 1 - p[0]

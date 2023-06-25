@@ -17,6 +17,7 @@ class Camera(db.Model):
     footages_path = db.Column(db.String(255), unique=True, nullable=False)
     temp_path = db.Column(db.String(255), unique=True, nullable=False)
     preprocess_data = db.Column(db.Boolean(), nullable=True, default=False)
+    current_detections = db.Column(db.Integer, default = 0)
     
     __table_args__ = (
         CheckConstraint("name != ''", name='non_empty_name_check'),
@@ -24,11 +25,12 @@ class Camera(db.Model):
         CheckConstraint("temp_path != ''", name='non_empty_temp_path_check')
     )
     
-    def __init__(self, name, status_id=1, description=None, footages_path=None, temp_path=None, preprocess_data=None):
+    def __init__(self, name, status_id=1, description=None, footages_path=None, temp_path=None, preprocess_data=None, current_detections=0):
         self.name = name
         self.status_id = status_id
         self.description = description
         self.preprocess_data = preprocess_data
+        self.current_detections = current_detections
         
         if footages_path is not None:
             self.footages_path = footages_path

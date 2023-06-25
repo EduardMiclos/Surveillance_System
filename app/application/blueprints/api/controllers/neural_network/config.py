@@ -67,3 +67,13 @@ RECOMM_VIDEO_EXT = "mp4"
 Path to the NN Model.
 """
 NN_MODEL_PATH = "/home/miclosedi/Surveillance_System/app/application/blueprints/api/controllers/neural_network/trained_model/rwf2000_model"
+
+"""
+Violence probability threshold.
+"""
+VIOLENCE_THRESHOLD = 0.5
+
+"""
+Detections threshold.
+"""
+DETECTIONS_THRESHOLD = 5

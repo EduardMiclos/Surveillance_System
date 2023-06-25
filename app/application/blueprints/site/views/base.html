@@ -29,6 +29,7 @@
             {% endif %}
         </div>
       </div>
+      <script src="/static/js/SSEs/camera_handling.js"></script>
       <script>
         const video{{camera.id}} = document.getElementById('video-stream{{ camera.id }}');
 
@@ -41,8 +42,9 @@
         let original_src{{camera.id}} = video{{camera.id}}.src;
         setInterval(() => {
           video{{camera.id}}.src = original_src{{camera.id}}
+
           video{{camera.id}}.src += '?' + new Date().getTime();
-        }, 3000);
+        }, 1000);
       </script>
     </div>
     {% endfor %}
