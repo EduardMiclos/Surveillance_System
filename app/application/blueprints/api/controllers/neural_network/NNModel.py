@@ -16,7 +16,7 @@ from tensorflow.python.keras import backend as K
 
 from .sep_conv_rnn import SepConvLSTM2D, AttenSepConvLSTM2D
 from .InputMode import InputMode
-
+from .config import NN_MODEL_PATH
 
 
 class NNModel(object):
@@ -154,8 +154,8 @@ class NNModel(object):
         elif self.input_mode == InputMode.ONLY_DIFFERENCES:
             model = Model(inputs = frames_diff_input, outputs = predictions)
 
-        model.load_weights("./controllers/neural_network/trained_model/rwf2000_model")
+        model.load_weights(NN_MODEL_PATH)
         return model
 
     def predict(self, data: object):
-        return self.model.predict([data])
+        return self.model([data])

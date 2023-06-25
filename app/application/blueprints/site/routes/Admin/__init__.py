@@ -1,6 +1,6 @@
 from .AdminInterface import AdminInterface
 from .Admin import Admin
-from .AddUser import AddUser
-from .EditUser import EditUser
-from .DeleteUser import DeleteUser
-from .GetUser import GetUser
+
+from .User import *
+from .Footage import *
+from .Camera import *

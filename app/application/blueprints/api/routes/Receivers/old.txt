@@ -1,0 +1,64 @@
+class FrameReceiver(ReceiverInterface):
+    base_route = f'{ReceiverInterface.base_route}/frames'
+    nn_adapter = None
+
+    """
+    Caching the NNAdapter (which constructs the Neural
+    Model once and loads its weights).
+    """
+    # def __init__(self):
+    #     if FrameReceiver.nn_adapter is None:
+    #         print('================== Creating NN ADAPTER ==================')
+    #         FrameReceiver.nn_adapter = NNAdapter()
+    
+    # redis_host = 'redis://:eadVM1ISwreEyKhQufiXtn7Zd0g2PAmfcAzCaLznZNk=@redis-surveillance-system.redis.cache.windows.net:6379'
+    # parsed_url = urllib.parse.urlparse(redis_host)
+
+    # redis_client = redis.Redis(
+    #     host=parsed_url.hostname,
+    #     port=parsed_url.port,
+    #     password=parsed_url.password,
+    # )
+    
+    # def __init__(self):
+    #     self.nn_adapter = FrameReceiver.get_or_create_nn_adapter()
+    
+    # @classmethod
+    # def get_or_create_nn_adapter(cls):
+    #     nn_adapter = cls.redis_client.get('nn_adapter')
+    #     if nn_adapter is None:
+    #         with FrameReceiver.redis_client.lock('nn_adapter_lock'):
+    #             nn_adapter = cls.redis_client.get('nn_adapter')
+    #             if nn_adapter is None:
+    #                 print('================== Creating NN ADAPTER ==================')
+    #                 nn_adapter = NNAdapter()
+    #                 cls.redis_client.set('nn_adapter', json.dumps(nn_adapter))
+    #     return json.loads(nn_adapter)
+    
+    def post(self):
+        file = request.files['Video2.mp4']
+        file.save('Video.mp4')
+        
+        # Load the video file
+        cap = cv.VideoCapture('Video.mp4')
+
+        # # Get the number of frames in the video
+        # num_frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
+
+        # # Create a numpy array to store the frames
+        # frames = np.zeros((num_frames, 360, 360, 3), dtype=np.float32)
+
+        # # Loop through the frames and store them in the numpy array
+        # for i in range(num_frames):
+        #     ret, frame = cap.read()
+        #     if ret:
+        #         frame = cv.resize(frame, (360, 360))
+        #         frames[i] = frame
+
+        # # Release the video capture object
+        # cap.release()
+        # os.remove('Video.mp4')
+        
+        # p = FrameReceiver.nn_adapter.predict_violence(frames)
+        p = 8
+        return str(p)

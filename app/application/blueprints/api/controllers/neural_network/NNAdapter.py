@@ -33,12 +33,21 @@ class NNAdapter:
 
     input_mode = InputMode.BOTH
 
+    _instance = None
+    _initialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self, frame_size: int = 360):
-        self.input_adapter = InputAdapter(frame_size = frame_size)
-        self.neural_model = NNModel(NNAdapter.input_mode)
+        if not self._initialized:
+            self.input_adapter = InputAdapter(frame_size=frame_size)
+            self.neural_model = NNModel(NNAdapter.input_mode)
+            self._initialized = True
 
     def predict_violence(self, data: object):
         data = self.input_adapter.transform_data(data)
-
         p = self.neural_model.predict(data)
         return 1 - p[0]

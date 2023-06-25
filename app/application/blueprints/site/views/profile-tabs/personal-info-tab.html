@@ -1,0 +1,45 @@
+<div class="container mt-4" id="personal-info">
+    <div class="row">
+      <div class="col-lg-10">
+        <h4 class="text-left mb-4">Informații personale</h4>
+        <form method="POST" action="" style="border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            <label for="{{ form.firstname.id }}">Nume</label>
+            {{ form.firstname(class="form-control", value = current_user.firstname) }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.secondname.id }}">Prenume</label>
+            {{ form.secondname(class="form-control", value = current_user.secondname) }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.phone.id }}">Număr de telefon</label>
+            {{ form.phone(class="form-control", value = current_user.phone) }}
+          </div>
+          <div class="text-left">
+            {{ form.submit(class="btn btn-primary") }}
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        {% if category == 'error' %}
+          <div class="text-left">
+            <div class="mt-4 alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          </div>
+        {% else %}
+          <div class="text-left">
+            <div class="mt-4 alert alert-success" role="alert">
+              {{ message }}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>

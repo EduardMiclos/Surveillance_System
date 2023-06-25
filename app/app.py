@@ -1,13 +1,16 @@
-from functools import wraps
-from flask import Flask, abort
 from flask_migrate import Migrate
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager
+from flask_sse import sse
+from flask_jwt_extended import JWTManager
+from redis import StrictRedis, exceptions
+from flask_caching import Cache
 
 if __name__ == 'app':
     from application.controllers.Application import Application
     from application.blueprints.api import api_bp
     from application.blueprints.site import site_bp
     from application.database.database import db
+    from application.controllers.cache import cache
     from application.instance import Config
     from application.database.models import User
 else:
@@ -15,6 +18,7 @@ else:
     from .application.blueprints.api import api_bp
     from .application.blueprints.site import site_bp
     from .application.database.database import db
+    from .application.controllers.cache import cache
     from .application.instance import Config
     from .application.database.models import User
 
@@ -26,7 +30,8 @@ application = Application()
 """
 Passing the blueprints to the current application.
 """
-app = application.create_app(blueprints = [api_bp, site_bp], config_object = Config)
+sse.url_prefix = '/stream'
+app = application.create_app(blueprints = [api_bp, site_bp, sse], config_object = Config)
 
 if __name__ == 'app.app':
     application.kill_port()
@@ -35,6 +40,7 @@ if __name__ == 'app.app':
 Initializing the database.
 """
 db.init_app(app)
+
 
 """
 Initializing the database migration engine.
@@ -55,3 +61,26 @@ it needs the application's help in loading a user.
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+"""
+Checking the connection to Redis cache.
+"""
+redis_client = StrictRedis.from_url(app.config['REDIS_URL'])
+
+try:
+    redis_client.ping()
+    print('[CONNECTIVITY SUCCESS] Redis connection is working!')
+except exceptions.ConnectionError as e:
+    print(f'[CONNECTIVITY FAIL] Error connecting to Redis: {str(e)}')
+    exit(1)
+
+"""
+Initializing the JWT.
+"""
+jwt = JWTManager(app)
+
+"""
+Initializing the Cache.
+"""
+cache.init_app(app)

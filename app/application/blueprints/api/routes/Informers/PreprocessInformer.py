@@ -8,6 +8,7 @@ class PreprocessInformer(InformerInterface):
     def get(self):
         response = Response()
         
+        response.add_data("ChunkName", config.RECOMM_CHUNK_NAME)
         response.add_data("ChunkSize", config.RECOMM_CHUNK_SIZE)
         response.add_data("Channels", config.RECOMM_IMG_CHANNELS)
         response.add_data("FrameSize", {"Value": config.RECOMM_FRAME_CROP,

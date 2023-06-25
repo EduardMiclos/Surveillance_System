@@ -4,6 +4,12 @@ regarding the preprocessing of images data.
 """
 
 """
+Recommended name of the chunk that is being
+sent to the central server.
+"""
+RECOMM_CHUNK_NAME = 'framechunk'
+
+"""
 Recommended number of frames to be send
 for each request.
 """
@@ -56,3 +62,18 @@ RECOMM_COMPRESSION_ALG = "h264"
 Recommended video extension.
 """
 RECOMM_VIDEO_EXT = "mp4"
+
+"""
+Path to the NN Model.
+"""
+NN_MODEL_PATH = "/home/miclosedi/Surveillance_System/app/application/blueprints/api/controllers/neural_network/trained_model/rwf2000_model"
+
+"""
+Violence probability threshold.
+"""
+VIOLENCE_THRESHOLD = 0.5
+
+"""
+Detections threshold.
+"""
+DETECTIONS_THRESHOLD = 5

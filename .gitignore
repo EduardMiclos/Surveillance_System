@@ -27,3 +27,7 @@ htmlcov/
 
 app/database/database.db
 migrations/
+profile_dir
+hwsystem/register.json
+hwsystem/config.json
+hwsystem/ignored

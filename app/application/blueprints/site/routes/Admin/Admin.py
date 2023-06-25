@@ -1,11 +1,10 @@
 # Third party imports
-from flask import render_template, make_response, session, redirect, abort
+from flask import render_template, make_response, session
 from flask_login import login_required, current_user
 
 # Local application imports
 from .AdminInterface import AdminInterface, admin_required
-from ...forms import RegisterForm
-from ...forms import UserEditForm
+from ...forms import RegisterForm, UserEditForm
 
 from .....database.models import User
 
@@ -31,6 +30,7 @@ class Admin(AdminInterface):
                             form = register_form,
                             useredit_form = useredit_form,
                             added_new_user = added_new_user,
+                            current_user = current_user,
                             edited_user = edited_user,
                             deleted_user = deleted_user,
                             users = users,

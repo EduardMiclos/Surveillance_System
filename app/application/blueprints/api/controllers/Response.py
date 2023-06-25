@@ -1,10 +1,9 @@
-from flask import Flask, jsonify
+from flask import jsonify
 from datetime import datetime
 
 class Response:
     def __init__(self):
         self.json = {}
-       
         
     def get_code(self):
         return self.json['Code']
@@ -47,4 +46,8 @@ class Response:
     def set_not_found(self):
         self.set_code(404)
         self.set_status("Not found")
+        
+    def set_forbidden(self):
+        self.set_code(403)
+        self.set_status("Access denied!")
         
