@@ -2,6 +2,8 @@ import os
 import telnetlib
 from time import sleep
 
+SERVER_CHECK_SLEEP_TIME = 5
+
 server_addr = os.environ.get('SERVER_ADDR')
 
 if server_addr is None:
@@ -44,4 +46,4 @@ while True:
         print('[FAIL] No response from the Central Server.')
         print('[INFO] Retrying...')
         
-    sleep(5)
+    sleep(SERVER_CHECK_SLEEP_TIME)

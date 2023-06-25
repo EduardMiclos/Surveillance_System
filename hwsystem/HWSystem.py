@@ -6,7 +6,7 @@ import threading
 from time import sleep
 from sseclient import SSEClient
 from typing import Dict, Any
-
+import signal
 
 class HWSystem:
     """
@@ -35,7 +35,7 @@ class HWSystem:
         
         self.RASPICAM_ID = 0
         self.OUTPUT_CHUNK_NAME = 'framechunk'
-        
+        self.SLEEP_BETWEEN_CHUNKS = 0 # seconds
         
         self.video_capturer = None
         self.video_writer = None
@@ -136,18 +136,19 @@ class HWSystem:
 
         Sends a request to update the camera status to the central server.
         """
-        self.stop_livestream.clear()
-
+        self.stop_livestream.set()
+        self.video_capturer.release()
+        
         self.update_system()
         
-        self.livestream_thread = threading.Thread(target=self.livestream)
-        self.livestream_thread.start()
         print('[INFO] Started livestreaming!')
         
         response = requests.get(f'{self.BASE_ROUTE}/api/camera/set-updated',
                                 headers={'Authorization': 'Bearer ' + self.CONFIG_JSON['JWT Token']},
                                 verify=True)
         self.renew_jwt_token(response.json())
+        
+        self.stop_livestream.clear()
 
     def handle_sse_start(self) -> None:
         """
@@ -161,8 +162,6 @@ class HWSystem:
 
         self.stop_livestream.clear()
 
-        self.livestream_thread = threading.Thread(target=self.livestream)
-        self.livestream_thread.start()
         print('[INFO] Started livestreaming!')
 
     def handle_sse_stop(self) -> None:
@@ -210,6 +209,7 @@ class HWSystem:
                 self.handle_sse_update()
             elif event_msg == 'RASP_START':
                 self.handle_sse_start()
+                self.start_module()
             elif event_msg == 'RASP_STOP':
                 self.handle_sse_stop()
 
@@ -309,7 +309,7 @@ class HWSystem:
             if not ret:
                 print('[ERROR] Failed to read the frame!')
                 print('Aborting...')
-                exit(1)
+                return
                 
             resized_frame = cv.resize(frame, (360, 360))
                 
@@ -338,7 +338,6 @@ class HWSystem:
             self.record_chunk()
             
             with open(output_file_name, 'rb') as f:
-                print(self.BASE_ROUTE)
                 
                 try: 
                     response = requests.post(f'{self.BASE_ROUTE}/api/send/frames',
@@ -348,7 +347,6 @@ class HWSystem:
                 except:
                     raise requests.exceptions.ConnectionError()
                         
-            
             if 'Code' not in response_json:
                 self.video_capturer.release()
                 raise requests.exceptions.ConnectionError()
@@ -360,11 +358,10 @@ class HWSystem:
                 if os.path.exists(self.config_json_path):
                     os.remove(self.config_json_path)
             
-            # Write the frames again from the beginning.
-            #self.video_writer.set(cv.CAP_PROP_POS_FRAMES, 0)
-            
             # Renewing the JWT Token
             self.renew_jwt_token(response.json())
+            
+            sleep(self.SLEEP_BETWEEN_CHUNKS)
             
         self.video_capturer.release()
 
@@ -398,10 +395,16 @@ class HWSystem:
                     self.CONFIG_JSON = self.CONFIG_JSON['Data']
 
                 self.livestream_thread = threading.Thread(target=self.livestream)
+                
+                # Starting the livestream session on a separate thread.
                 self.livestream_thread.start()
+                              
+                # Listening for SSEs on the current thread.
                 self.listen_for_sse()
 
                 self.livestream_thread.join()
+                
+                
             except requests.exceptions.ConnectionError:
                 if self.livestream_thread.is_alive():
                     self.livestream_thread.join()
