@@ -97,7 +97,7 @@ class FramesProvider(FramesProviderInterface):
             current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             cv.putText(resized_frame, current_datetime, (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv.LINE_AA)
             
-            if 'aa.' in latest_file_path:
+            if 'V.' in latest_file_path:
                 resized_frame = self._add_border(resized_frame)
             
             

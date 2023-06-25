@@ -125,28 +125,26 @@ class FrameReceiver(ReceiverInterface):
         self.__delete_oldest_footage(temp_footages_path)
         file.save(video_path)
         
-        # p = self.detect_violence(video_path)
-        # print(p)
+        p = self.detect_violence(video_path)
         
-        # if p > config.VIOLENCE_THRESHOLD:
-        #     os.rename(video_path, f'{temp_footages_path}/V.REG_{camera.name}_{current_datetime}.{config.RECOMM_VIDEO_EXT}')
+        if p > config.VIOLENCE_THRESHOLD:
+            os.rename(video_path, f'{temp_footages_path}/V.REG_{camera.name}_{current_datetime}.{config.RECOMM_VIDEO_EXT}')
             
-        #     camera.current_detections += 1
+            camera.current_detections += 1
             
-        #     if camera.current_detections >= config.DETECTIONS_THRESHOLD:
-        #         print('incepi sau nu?')
-        #         process = Process(target=self.__save_footage, args=(temp_footages_path, footages_path, camera.id))
-        #         process.start()
+            if camera.current_detections >= config.DETECTIONS_THRESHOLD:
+                process = Process(target=self.__save_footage, args=(temp_footages_path, footages_path, camera.id))
+                process.start()
                 
-        #         # self.__save_footage(temp_footages_path, footages_path, camera.id)
+                self.__save_footage(temp_footages_path, footages_path, camera.id)
                 
-        #         camera.current_detections = 0
-        # else:
-        #     camera.current_detections = max(camera.current_detections - 1, 0)
+                camera.current_detections = 0
+        else:
+            camera.current_detections = max(camera.current_detections - 1, 0)
             
         
-        # db.session.add(camera)
-        # db.session.commit()
+        db.session.add(camera)
+        db.session.commit()
         
         
         response = Response()
